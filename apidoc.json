@@ -1,0 +1,7 @@
+{
+    "name": "Movie reviewer project",
+    "version": "1.0.0",
+    "description": "REST APIs availables for a backend server to manage a movie reviewer website",
+    "title": "Movie reviewer project API",
+    "url" : "https://github.com/IvanGarL/movie-reviewer-project"
+}
