@@ -1,0 +1,1 @@
+export { InitialDbSchema1691601504770 } from '../migrations/1691601504770-initialDbSchema';
