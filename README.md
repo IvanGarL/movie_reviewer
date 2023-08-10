@@ -31,7 +31,7 @@ Instructions to run the server
     1. Theres the option of exploring the services using the Postman collection available in the root directory. Import the file 'Movie reviewer.postman_collection.json' to postman and create a new env variable called ```basicUrl``` with the value of 'http://localhost:8080'.
     
     2. All the code is documented in ```./docs/index.html```
-    3. The API REST docs is available in github-pages in this link: https://ivangarl.github.io/web-scraper/
+    3. The API REST docs is available in github-pages in this link: https://ivangarl.github.io/movie_reviewer/
     
 - Test:
     Run the test suite running: ```npm run test```
