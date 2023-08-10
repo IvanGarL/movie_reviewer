@@ -12,6 +12,9 @@ export enum AppService {
     REVIEW = 'review',
 }
 
+/**
+ * Available paths for each service
+ */
 export enum AppServicePath {
     USER = '/users',
     MOVIE = '/movies',
