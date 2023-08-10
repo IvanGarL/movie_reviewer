@@ -44,5 +44,5 @@ export interface UserReviewsResponse {
         updatedAt: Date;
     }[];
     pageCount: number;
-    total: number;
+    pages: number;
 }

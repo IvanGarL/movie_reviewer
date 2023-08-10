@@ -10,7 +10,7 @@ const app = new App([new UserController(), new MovieController(), new ReviewCont
 // IIFE to start the server
 (async () => {
     // load movies to db
-    await app.getController(AppService.MOVIE).loadMovies(app.tmdbClient, Number(process.env.TMDB_MOVIE_PAGES));
+    // await app.getController(AppService.MOVIE).loadMovies(app.tmdbClient, Number(process.env.TMDB_MOVIE_PAGES));
     // start server
     await app.listen();
     // show available routes

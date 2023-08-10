@@ -184,9 +184,7 @@ export default class UsersService {
             validateToken: true,
             handler: async (req: Request, res: Response, manager: EntityManager) => {
                 if (!req.params?.username) throw new HttpError(400, 'username is required to get user reviews');
-                const { username } = req.params;
-                // defaults to 1
-                const { page } = req.query ?? { page: 1 };
+                const { params: {username }, query: { page } } = req;
 
                 const user = await manager.findOne(User, { where: { username } });
 
@@ -198,7 +196,7 @@ export default class UsersService {
                     entityAlias: 'review',
                     orderingField: 'createdAt',
                     orderingDirection: 'DESC',
-                    page: Number(page),
+                    page: Number(page ?? 1),
                     pageSize: 10,
                 });
 

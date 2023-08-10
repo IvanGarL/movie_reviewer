@@ -8,7 +8,7 @@ import { MovieReviewsResponse } from './movieTypes';
  * @param {Review[]} reviews
  * @returns {MovieReviewsResponse}
  */
-export const mapMovieReviews = (movie: Movie, reviews: Review[], total: number): MovieReviewsResponse => {
+export const mapMovieReviews = (movie: Movie, reviews: Review[], pages: number): MovieReviewsResponse => {
     return {
         id: movie.id,
         tmdbId: movie.tmdbId,
@@ -27,6 +27,6 @@ export const mapMovieReviews = (movie: Movie, reviews: Review[], total: number):
               }))
             : [],
         pageCount: reviews.length,
-        total,
+        pages,
     };
 };

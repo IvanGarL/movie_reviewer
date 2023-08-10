@@ -8,7 +8,7 @@ import { UserReviewsResponse } from './userTypes';
  * @param {Review[]} reviews
  * @returns {UserReviewsResponse}
  */
-export const mapUserReviews = (user: User, reviews: Review[], total: number): UserReviewsResponse => {
+export const mapUserReviews = (user: User, reviews: Review[], pages: number): UserReviewsResponse => {
     return {
         id: user.id,
         username: user.username,
@@ -25,6 +25,6 @@ export const mapUserReviews = (user: User, reviews: Review[], total: number): Us
               }))
             : [],
         pageCount: reviews.length,
-        total,
+        pages,
     };
 };

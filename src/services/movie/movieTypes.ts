@@ -17,5 +17,5 @@ export interface MovieReviewsResponse {
         updatedAt: Date;
     }[];
     pageCount: number;
-    total: number;
+    pages: number;
 }

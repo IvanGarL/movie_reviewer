@@ -112,9 +112,10 @@ export default class MovieService {
             validateToken: true,
             handler: async (req: AuthRequest, res: Response, manager: EntityManager) => {
                 if (!req.params?.tmdbId) throw new HttpError(400, 'tmdbId is required to get movie reviews');
-                const { tmdbId } = req.params;
-                // defaults to page 1
-                const { page } = req.query ?? { page: 1 };
+                const {
+                    params: { tmdbId },
+                    query: { page },
+                } = req;
 
                 const movie = await manager.findOne(Movie, {
                     where: { tmdbId: Number(tmdbId) },
@@ -128,7 +129,7 @@ export default class MovieService {
                     entityAlias: 'review',
                     orderingField: 'createdAt',
                     orderingDirection: 'DESC',
-                    page: Number(page),
+                    page: Number(page ?? 1),
                     pageSize: 10,
                 });
 
@@ -175,7 +176,7 @@ export default class MovieService {
             validateToken: true,
             handler: async (req: AuthRequest, res: Response, manager: EntityManager) => {
                 // defaults to page 1
-                const { page } = req.query ?? { page: 1 };
+                const { page } = req.query;
 
                 const getMoviesQuery = manager.createQueryBuilder(Movie, 'movie');
                 const movies = await PaginationUtils.getPageOfQuery({
@@ -183,14 +184,14 @@ export default class MovieService {
                     entityAlias: 'movie',
                     orderingField: 'releaseDate',
                     orderingDirection: 'DESC',
-                    page: Number(page),
+                    page: Number(page ?? 1),
                     pageSize: 10,
                 });
 
                 res.status(200).send({
                     movies: movies.currentPage,
                     pageCount: movies.currentPage.length,
-                    total: movies.pagesCount,
+                    pages: movies.pagesCount,
                 });
             },
         });

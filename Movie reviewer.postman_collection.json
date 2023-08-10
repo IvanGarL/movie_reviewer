@@ -1,0 +1,581 @@
+{
+	"info": {
+		"_postman_id": "95f53cc1-1b98-40ae-9e88-ecebb80ab07c",
+		"name": "Movie reviewer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17644968"
+	},
+	"item": [
+		{
+			"name": "User signUp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"Auth\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"ivangarl\",\n    \"email\": \"ivangarl@yopmail.com\",\n    \"password\": \"123456789abcd\",\n    \"passwordConfirmation\": \"123456789abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{basicUrl}}/users/register",
+					"host": [
+						"{{basicUrl}}"
+					],
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User logIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"Auth\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"ivangarl@yopmail.com\",\n    \"password\": \"123456789abcd\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{basicUrl}}/users/logIn",
+					"host": [
+						"{{basicUrl}}"
+					],
+					"path": [
+						"users",
+						"logIn"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post review",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tmdbId\": 804150,\n    \"userName\": \"ivangarl\",\n    \"rating\": 10,\n    \"comment\": \"Bear + cocaine, its an atomic bomb combo B)\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{basicUrl}}/reviews",
+					"host": [
+						"{{basicUrl}}"
+					],
+					"path": [
+						"reviews"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Updated Review",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Auth}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tmdbId\": 502356,\n    \"userName\": \"ivangarl\",\n    \"rating\": 7.5,\n    \"comment\": \"Great mario movie\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basicUrl}}/reviews",
+							"host": [
+								"{{basicUrl}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "41"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29-3hetRLIBiFatnpIRAozgKL4JySA\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 19:09:09 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Review updated successfully\"\n}"
+				},
+				{
+					"name": "Created review",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Auth}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"tmdbId\": 8920,\n    \"userName\": \"ivangarl\",\n    \"rating\": 9.12937,\n    \"comment\": \"Love garfield\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{basicUrl}}/reviews",
+							"host": [
+								"{{basicUrl}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "304"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"130-DVqKC2YkMfkz6emJlQu83l6wD+M\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 19:16:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Review created successfully\",\n    \"review\": {\n        \"id\": \"2fd1023f-9a3d-44e3-8e12-b8ab4684b870\",\n        \"movieTmdbId\": 8920,\n        \"userId\": \"93025cd0-7eaf-509b-9b2c-605a95c60281\",\n        \"username\": \"ivangarl\",\n        \"rating\": \"9.1\",\n        \"comment\": \"Love garfield\",\n        \"createdAt\": \"2023-08-10T19:16:05.990Z\",\n        \"updatedAt\": \"2023-08-10T19:16:05.990Z\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Movie reviews",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{basicUrl}}/movies/:tmdbId/reviews",
+					"host": [
+						"{{basicUrl}}"
+					],
+					"path": [
+						"movies",
+						":tmdbId",
+						"reviews"
+					],
+					"variable": [
+						{
+							"key": "tmdbId",
+							"value": "804150"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Movie reviews",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Auth}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{basicUrl}}/movies/:tmdbId/reviews",
+							"host": [
+								"{{basicUrl}}"
+							],
+							"path": [
+								"movies",
+								":tmdbId",
+								"reviews"
+							],
+							"variable": [
+								{
+									"key": "tmdbId",
+									"value": "804150"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "681"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2a9-yGrbwNMPT5wM8ghADyJD6yHEgR8\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 21:49:55 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"160f011c-1f54-4fa0-b344-9302558ec767\",\n    \"tmdbId\": 804150,\n    \"title\": \"Cocaine Bear\",\n    \"overview\": \"Inspired by a true story, an oddball group of cops, criminals, tourists and teens converge in a Georgia forest where a 500-pound black bear goes on a murderous rampage after unintentionally ingesting cocaine.\",\n    \"posterPath\": \"https://image.tmdb.org/t/p/w500/gOnmaxHo0412UVr1QM5Nekv1xPi.jpg\",\n    \"releaseDate\": \"2023-02-22T00:00:00.000Z\",\n    \"reviews\": [\n        {\n            \"id\": \"c33bd7aa-7990-4900-95b0-5857f523d468\",\n            \"comment\": \"Bear + cocaine, its an atomic bomb combo B)\",\n            \"rating\": \"10.00\",\n            \"username\": \"ivangarl\",\n            \"createdAt\": \"2023-08-10T19:49:43.792Z\",\n            \"updatedAt\": \"2023-08-10T19:51:21.325Z\"\n        }\n    ],\n    \"pageCount\": 1,\n    \"pages\": 1\n}"
+				}
+			]
+		},
+		{
+			"name": "Movies",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{basicUrl}}/movies",
+					"host": [
+						"{{basicUrl}}"
+					],
+					"path": [
+						"movies"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Successful answer",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Auth}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{basicUrl}}/movies/:tmdbId/reviews",
+							"host": [
+								"{{basicUrl}}"
+							],
+							"path": [
+								"movies",
+								":tmdbId",
+								"reviews"
+							],
+							"variable": [
+								{
+									"key": "tmdbId",
+									"value": "569094"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "670"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"29e-97wBclWjrAwkGakPjBKaGrN207s\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 17:29:06 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"71fabee9-e5f9-442e-bc93-90935e92dee4\",\n    \"tmdbId\": 569094,\n    \"title\": \"Spider-Man: Across the Spider-Verse\",\n    \"overview\": \"After reuniting with Gwen Stacy, Brooklyn’s full-time, friendly neighborhood Spider-Man is catapulted across the Multiverse, where he encounters the Spider Society, a team of Spider-People charged with protecting the Multiverse’s very existence. But when the heroes clash on how to handle a new threat, Miles finds himself pitted against the other Spiders and must set out on his own to save those he loves most.\",\n    \"posterPath\": \"https://image.tmdb.org/t/p/w500/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg\",\n    \"releaseDate\": \"2023-05-31T00:00:00.000Z\",\n    \"reviews\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "User reviews",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{Auth}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{basicUrl}}/users/:username/reviews",
+					"host": [
+						"{{basicUrl}}"
+					],
+					"path": [
+						"users",
+						":username",
+						"reviews"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "1",
+							"disabled": true
+						}
+					],
+					"variable": [
+						{
+							"key": "username",
+							"value": "ivangarl"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "User reviews",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{Auth}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{basicUrl}}/users/:username/reviews",
+							"host": [
+								"{{basicUrl}}"
+							],
+							"path": [
+								"users",
+								":username",
+								"reviews"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "username",
+									"value": "ivangarl"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "361"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"169-h7aDIPhcriwQ27Ky554kGnAhrzA\""
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 10 Aug 2023 21:50:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"d538048b-7877-5580-863e-8848e2340710\",\n    \"username\": \"ivangarl\",\n    \"email\": \"ivangarl@yopmail.com\",\n    \"role\": \"user\",\n    \"reviews\": [\n        {\n            \"id\": \"c33bd7aa-7990-4900-95b0-5857f523d468\",\n            \"comment\": \"Bear + cocaine, its an atomic bomb combo B)\",\n            \"rating\": \"10.00\",\n            \"tmdbId\": 804150,\n            \"createdAt\": \"2023-08-10T19:49:43.792Z\",\n            \"updatedAt\": \"2023-08-10T19:51:21.325Z\"\n        }\n    ],\n    \"pageCount\": 1,\n    \"pages\": 1\n}"
+				}
+			]
+		}
+	]
+}
