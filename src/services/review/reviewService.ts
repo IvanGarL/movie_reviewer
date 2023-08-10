@@ -8,6 +8,35 @@ import { middleware } from '../../middlewares/auth';
 import HttpError from '../../utils/exception';
 
 export default class ReviewService {
+    /**
+     * @api {POST} /reviews Submits a new review
+     * @apiName SubmitReview
+     * @apiGroup Review
+     * @apiVersion  1.0.0
+     * @apiPermission USER
+     * @apiParam  {Number} tmdbId Movie TMDB ID
+     * @apiParam  {String} userName User name
+     * @apiParam  {Number} rating User rating
+     * @apiParam  {String} [comment] User comment
+     * @apiSuccess (201) {String} message Review submitted
+     * @apiSuccess (201) {Object} review Review object
+     * @apiError (400) {String} message Error submitting review
+     * @apiError (400) {String} message User already reviewed this movie
+     * @apiError (500) {String} message Internal server error
+     * @apiSuccessExample {json} Success-Response:
+     * {
+     *     "message": "Review created successfully"
+     *     "review": {
+     *        "id": 1,
+     *        "movieTmdbId": 123,
+     *        "username": "ivan",
+     *        "rating": 8,
+     *        "comment": "Great movie",
+     *        "createdAt": "2021-01-01T00:00:00.000Z",
+     *        "updatedAt": "2021-01-01T00:00:00.000Z"
+     *      }
+     * }
+     */
     public async submitReview(req: AuthRequest, res: Response): Promise<void> {
         const submitReviewValidationSchema = J.object({
             tmdbId: J.number().required(),

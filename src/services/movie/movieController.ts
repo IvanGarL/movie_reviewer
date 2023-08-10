@@ -24,7 +24,7 @@ export class MovieController implements Controller {
     public initializeRoutes(): void {}
 
     public getAvailableRoutes(): void {
-        console.log('\nMovie routes availables:');
+        console.log('\nMovie routes available:');
         this.router.stack.forEach(({ route }) => {
             const [availableRoute] = Object.keys(route.methods).map((method) =>
                 '- '.concat(method.toUpperCase()).concat(' ').concat(route.path),

@@ -2,9 +2,10 @@ import 'dotenv/config';
 import App from './app';
 import { AppService } from './common/appCommonTypes';
 import { MovieController } from './services/movie/movieController';
+import { ReviewController } from './services/review/reviewController';
 import { UserController } from './services/user/userController';
 
-const app = new App([new UserController(), new MovieController()]);
+const app = new App([new UserController(), new MovieController(), new ReviewController()]);
 
 // IIFE to start the server
 (async () => {

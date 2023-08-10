@@ -27,7 +27,7 @@ export class UserController implements Controller {
     }
 
     public getAvailableRoutes(): void {
-        console.log('\nUser routes availables:');
+        console.log('\nUser routes available:');
         this.router.stack.forEach(({ route }) => {
             const [availableRoute] = Object.keys(route.methods).map((method) =>
                 '- '.concat(method.toUpperCase()).concat(' ').concat(route.path),
