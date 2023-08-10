@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AppService, Controller } from '../../common/appCommonTypes';
+import { AppService, AppServicePath, Controller } from '../../common/appCommonTypes';
 import UsersService from './userService';
 
 enum UserRoutes {
@@ -14,18 +14,24 @@ export class UserController implements Controller {
     protected usersService: UsersService;
 
     constructor() {
-        this.path = '/users';
+        this.path = AppServicePath.USER;
         this.service = AppService.USER;
         this.router = Router();
         this.usersService = new UsersService();
         this.initializeRoutes();
     }
 
+    /**
+     * Initializes the routes
+     */
     public initializeRoutes() {
         this.router.post(this.path.concat(UserRoutes.REGISTER), this.usersService.register);
         this.router.post(this.path.concat(UserRoutes.LOGIN), this.usersService.logIn);
     }
 
+    /**
+     * Prints the available routes
+     */
     public getAvailableRoutes(): void {
         console.log('\nUser routes available:');
         this.router.stack.forEach(({ route }) => {

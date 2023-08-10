@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { AppService, Controller } from '../../common/appCommonTypes';
+import { AppService, AppServicePath, Controller } from '../../common/appCommonTypes';
 import ReviewService from './reviewService';
 
 export class ReviewController implements Controller {
@@ -9,17 +9,23 @@ export class ReviewController implements Controller {
     private reviewService: ReviewService;
 
     constructor() {
-        this.path = '/reviews';
-        this.router = Router();
+        this.path = AppServicePath.REVIEW;
         this.service = AppService.REVIEW;
+        this.router = Router();
         this.reviewService = new ReviewService();
         this.initializeRoutes();
     }
 
+    /**
+     * Initializes the routes
+     */
     public initializeRoutes(): void {
         this.router.post(this.path, this.reviewService.submitReview);
     }
 
+    /**
+     * Prints the available routes
+     */
     public getAvailableRoutes(): void {
         console.log('Review routes available:');
         this.router.stack.forEach(({ route }) => {

@@ -13,6 +13,7 @@ import HttpError from '../utils/exception';
 interface MiddlewareOptions {
     bodyValidation?: J.ObjectSchema;
     queryValidation?: J.ObjectSchema;
+    pathsValidation?: J.ObjectSchema;
     roles?: UserRoles[];
     validateToken: boolean;
     handler: (req: AuthRequest, res: Response, db: EntityManager) => Promise<any>;
@@ -38,7 +39,7 @@ const validateRoles = (allowedRoles: UserRoles[], userRole: UserRoles) => {
 export const middleware = async (req: AuthRequest, res: Response, middlewareOptions: MiddlewareOptions): Promise<any> => {
     // validate token and role
     const token = req.headers.authorization;
-    const { validateToken, roles, bodyValidation, queryValidation, handler } = middlewareOptions;
+    const { validateToken, roles, bodyValidation, queryValidation, pathsValidation, handler } = middlewareOptions;
     if (token || validateToken) {
         let decodedToken: DecodedToken;
         try {
@@ -69,6 +70,12 @@ export const middleware = async (req: AuthRequest, res: Response, middlewareOpti
         const { error } = queryValidation.validate(req.query);
         if (error)
             return res.status(400).send({ error: 'Request query params Validation Error\n'.concat(error.message) });
+    }
+    // validate paths
+    if (pathsValidation) {
+        const { error } = pathsValidation.validate(req.params);
+        if (error)
+            return res.status(400).send({ error: 'Request path params Validation Error\n'.concat(error.message) });
     }
     console.log(req.hostname, req.originalUrl, req.path, req.body, req.method, req.headers);
 

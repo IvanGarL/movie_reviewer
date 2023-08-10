@@ -29,7 +29,7 @@ export class Review {
      */
     @Index()
     @Column()
-    movieTmdbId: string;
+    movieTmdbId: number;
 
     /**
      * Unique id of the user
@@ -64,7 +64,7 @@ export class Review {
     @JoinColumn({ name: 'movieTMDBId' })
     movie: Movie;
 
-    constructor(payload?: { rating: number; comment: string; movieTMDBId: string; username: string }) {
+    constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string }) {
         if (payload) {
             this.rating = payload.rating;
             this.comment = payload.comment;

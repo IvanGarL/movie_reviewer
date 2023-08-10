@@ -27,10 +27,10 @@ export default class ReviewService {
      * {
      *     "message": "Review created successfully"
      *     "review": {
-     *        "id": 1,
+     *        "id": "asdasd-123123-asdasd-123123",
      *        "movieTmdbId": 123,
-     *        "username": "ivan",
-     *        "rating": 8,
+     *        "username": "ivangarl",
+     *        "rating": 8.0,
      *        "comment": "Great movie",
      *        "createdAt": "2021-01-01T00:00:00.000Z",
      *        "updatedAt": "2021-01-01T00:00:00.000Z"
@@ -39,7 +39,7 @@ export default class ReviewService {
      */
     public async submitReview(req: AuthRequest, res: Response): Promise<void> {
         const submitReviewValidationSchema = J.object({
-            tmdbId: J.number().required(),
+            tmdbId: J.number().min(1).required(),
             userName: J.string().required(),
             rating: J.number().min(1).max(10).precision(2).required(),
             comment: J.string().optional().allow(''),
@@ -54,13 +54,14 @@ export default class ReviewService {
                 const { tmdbId, userName, rating, comment } = req.body;
                 const existingReview = await manager.findOne(Review, {
                     where: {
-                        movieTmdbId: tmdbId,
+                        movieTmdbId: Number(tmdbId),
                         username: userName,
                     },
                 });
 
                 if (existingReview) {
-                    await manager.update(Review, { id: existingReview.id }, { rating, comment: comment || '' });
+                    const updatePayload = comment ? { rating, comment } : { rating };
+                    await manager.update(Review, { id: existingReview.id }, updatePayload);
                     res.status(200).send({ message: 'Review updated successfully' });
                 }
 
@@ -77,6 +78,7 @@ export default class ReviewService {
                     }),
                 );
 
+                // TODO: create mapper to map entity to response object
                 return res.status(201).send({ message: 'Review created successfully', review: newReview });
             },
         });
