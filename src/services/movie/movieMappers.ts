@@ -1,12 +1,14 @@
 import { Movie } from '../../entities/Movie';
+import { Review } from '../../entities/Review';
 import { MovieReviewsResponse } from './movieTypes';
 
 /**
- * Maps a Movie entity to a MovieReviewsResponse
- * @param {Movie} movie 
+ * Maps information from a movie and its reviews to a response
+ * @param {Movie} movie
+ * @param {Review[]} reviews
  * @returns {MovieReviewsResponse}
  */
-export const mapMovieReviews = (movie: Movie): MovieReviewsResponse => {
+export const mapMovieReviews = (movie: Movie, reviews: Review[], total: number): MovieReviewsResponse => {
     return {
         id: movie.id,
         tmdbId: movie.tmdbId,
@@ -14,8 +16,8 @@ export const mapMovieReviews = (movie: Movie): MovieReviewsResponse => {
         overview: movie.overview,
         posterPath: movie.posterPath,
         releaseDate: movie.releaseDate,
-        reviews: movie.reviews
-            ? movie.reviews.map((review) => ({
+        reviews: reviews.length
+            ? reviews.map((review) => ({
                   id: review.id,
                   comment: review.comment,
                   rating: review.rating,
@@ -24,5 +26,7 @@ export const mapMovieReviews = (movie: Movie): MovieReviewsResponse => {
                   updatedAt: review.updatedAt,
               }))
             : [],
+        pageCount: reviews.length,
+        total,
     };
 };

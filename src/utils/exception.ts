@@ -1,4 +1,4 @@
-class HttpError extends Error {
+export default class HttpError extends Error {
     public status: number;
     public message: string;
 
@@ -8,5 +8,3 @@ class HttpError extends Error {
         this.message = message;
     }
 }
-
-export default HttpError;

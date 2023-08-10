@@ -26,3 +26,23 @@ export interface UserSignUpResponse {
     email: string;
     role: UserRoles;
 }
+
+/**
+ * Response for the GET /users/{username}/reviews endpoint
+ */
+export interface UserReviewsResponse {
+    id: string;
+    username: string;
+    email: string;
+    role: UserRoles;
+    reviews: {
+        id: string;
+        comment: string;
+        rating: number;
+        tmdbId: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }[];
+    pageCount: number;
+    total: number;
+}

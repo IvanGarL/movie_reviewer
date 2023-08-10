@@ -8,7 +8,9 @@ import { Movie } from '../../entities/Movie';
 import { UserRoles } from '../../entities/User';
 import { middleware } from '../../middlewares/auth';
 import HttpError from '../../utils/exception';
+import { PaginationUtils } from '../../utils/pagination';
 import { TheMovieDBAPIClient, TmdbMovie } from '../../utils/tmdb';
+import { createMovieReviewsQuery } from './movieDatabase';
 import { mapMovieReviews } from './movieMappers';
 export default class MovieService {
     /**
@@ -84,7 +86,7 @@ export default class MovieService {
      *      "overview": "The movie overview",
      *      "posterPath": "https://image.tmdb.org/t/p/w500/abc.jpg",
      *      "releaseDate": "2020-01-01T00:00:00.000Z",
-     *      "reviews": [ 
+     *      "reviews": [
      *          {
      *              "id": "1",
      *              "comment": "The review comment",
@@ -97,25 +99,99 @@ export default class MovieService {
      *   }
      */
     public async getMovieReviews(req: AuthRequest, res: Response): Promise<void> {
-        const getMovieReviewsValidationSchema = J.object({
+        const getMovieReviewsPathsValidationSchema = J.object({
             tmdbId: J.number().min(1).required(),
         });
+        const getMovieReviewsQueryValidationSchema = J.object({
+            page: J.number().min(1).default(1).optional().allow(null),
+        });
         return await middleware(req, res, {
-            pathsValidation: getMovieReviewsValidationSchema,
+            pathsValidation: getMovieReviewsPathsValidationSchema,
+            queryValidation: getMovieReviewsQueryValidationSchema,
             roles: [UserRoles.USER],
             validateToken: true,
             handler: async (req: AuthRequest, res: Response, manager: EntityManager) => {
                 if (!req.params?.tmdbId) throw new HttpError(400, 'tmdbId is required to get movie reviews');
                 const { tmdbId } = req.params;
+                // defaults to page 1
+                const { page } = req.query ?? { page: 1 };
 
-                const movieReviews = await manager.findOne(Movie, {
-                    relations: ['reviews'],
+                const movie = await manager.findOne(Movie, {
                     where: { tmdbId: Number(tmdbId) },
                 });
 
-                if (!movieReviews) throw new HttpError(404, `Movie with tmdbId: ${tmdbId} not found`);
+                if (!movie) throw new HttpError(404, `Movie with tmdbId: ${tmdbId} not found`);
 
-                res.status(200).send(mapMovieReviews(movieReviews));
+                const getMovieReviewsQuery = createMovieReviewsQuery(manager, Number(tmdbId));
+                const movieReviews = await PaginationUtils.getPageOfQuery({
+                    query: getMovieReviewsQuery,
+                    entityAlias: 'review',
+                    orderingField: 'createdAt',
+                    orderingDirection: 'DESC',
+                    page: Number(page),
+                    pageSize: 10,
+                });
+
+                res.status(200).send(mapMovieReviews(movie, movieReviews.currentPage, movieReviews.pagesCount));
+            },
+        });
+    }
+
+    /**
+     * @api {GET} /movies Get movies
+     * @apiName GetMovies
+     * @apiGroup Movie
+     * @apiDescription Get movies
+     * @apiParam {number} [page=1] The page number
+     * @apiSuccess {Movie[]} movies The movies
+     * @apiSuccess {number} movies.id The movie id
+     * @apiSuccess {number} movies.tmdbId The movie tmdbId
+     * @apiSuccess {string} movies.title The movie title
+     * @apiSuccess {string} movies.overview The movie overview
+     * @apiSuccess {string} movies.posterPath The movie poster path
+     * @apiSuccess {Date} movies.releaseDate The movie release date
+     * @apiSuccessExample {json} Success-Response:
+     *   HTTP/1.1 200 OK
+     *  {
+     *      "movies": [
+     *          {
+     *              "id": "1",
+     *              "tmdbId": 123,
+     *              "title": "The Movie",
+     *              "overview": "The movie overview",
+     *              "posterPath": "https://image.tmdb.org/t/p/w500/abc.jpg",
+     *              "releaseDate": "2020-01-01T00:00:00.000Z"
+     *         }
+     *      ]
+     *  }
+     */
+    public async getMovies(req: AuthRequest, res: Response): Promise<void> {
+        const getMoviesQueryValidationSchema = J.object({
+            page: J.number().min(1).default(1).optional().allow(null),
+        });
+        return await middleware(req, res, {
+            queryValidation: getMoviesQueryValidationSchema,
+            roles: [UserRoles.USER],
+            validateToken: true,
+            handler: async (req: AuthRequest, res: Response, manager: EntityManager) => {
+                // defaults to page 1
+                const { page } = req.query ?? { page: 1 };
+
+                const getMoviesQuery = manager.createQueryBuilder(Movie, 'movie');
+                const movies = await PaginationUtils.getPageOfQuery({
+                    query: getMoviesQuery,
+                    entityAlias: 'movie',
+                    orderingField: 'releaseDate',
+                    orderingDirection: 'DESC',
+                    page: Number(page),
+                    pageSize: 10,
+                });
+
+                res.status(200).send({
+                    movies: movies.currentPage,
+                    pageCount: movies.currentPage.length,
+                    total: movies.pagesCount,
+                });
             },
         });
     }

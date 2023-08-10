@@ -16,4 +16,6 @@ export interface MovieReviewsResponse {
         createdAt: Date;
         updatedAt: Date;
     }[];
+    pageCount: number;
+    total: number;
 }

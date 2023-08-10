@@ -36,6 +36,7 @@ export class MovieController implements Controller {
      */
     public initializeRoutes(): void {
         this.router.get(this.path.concat(MovieRoutes.GET_MOVIE_REVIEWS), this.movieService.getMovieReviews);
+        this.router.get(this.path, this.movieService.getMovies);
     }
 
     /**
