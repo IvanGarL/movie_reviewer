@@ -3,13 +3,9 @@ const testMatch = ['**/*.test.ts'];
 module.exports = {
     displayName: 'web-scraper-test',
     roots: ['src/', 'node_modules/'],
-    globals: {
-        'ts-jest': {
-            tsconfig: '<rootDir>/tsconfig.json',
-        },
-    },
+    globals: {},
     transform: {
-        '^.+\\.[tj]sx?$': 'ts-jest',
+        '^.+\\.[tj]sx?$': ['ts-jest', { tsconfig: '<rootDir>/tsconfig.json' }],
     },
     testTimeout: 170000,
     moduleDirectories: ['node_modules', 'src'],

@@ -1,0 +1,197 @@
+{
+    "folders": [
+        {
+            "path": "../",
+            "name": "Root"
+        },
+    ],
+    "extensions": {
+        "recommendations": [
+            "streetsidesoftware.code-spell-checker",
+            "eamodio.gitlens",
+            "streetsidesoftware.code-spell-checker-spanish",
+            "augustocdias.tasks-shell-input",
+            "meganrogge.template-string-converter",
+            "codestream.codestream",
+            "fooxly.workspace",
+            "esbenp.prettier-vscode",
+            "dbaeumer.vscode-eslint",
+            "yatki.vscode-surround",
+            "mechatroner.rainbow-csv",
+            "rogalmic.bash-debug",
+        ]
+    },
+    "settings": {
+        "typescript.preferences.importModuleSpecifier": "project-relative",
+        "typescript.preferences.quoteStyle": "single",
+        "search.exclude": {
+            "**/dist": true,
+            "**/assets": true,
+            "**/docs": true,
+        },
+        "eslint.options": {
+            "extensions": [
+                ".ts"
+            ]
+        },
+        "eslint.workingDirectories": [
+            ""
+        ],
+        "eslint.validate": [
+            "typescript"
+        ],
+        "[typescript]": {
+            "editor.codeActionsOnSave": {
+                "source.fixAll.eslint": true,
+                "editor.formatOnSave": true,
+                "source.organizeImports": true
+            },
+            "editor.formatOnSave": true,
+            "editor.defaultFormatter": "esbenp.prettier-vscode"
+        },
+        "todohighlight.include": [
+            "**/*.ts"
+        ],
+        "git.ignoreLimitWarning": true,
+        "files.watcherExclude": {
+            "**/.git/objects/**": false,
+            "**/.git/subtree-cache/**": true,
+            "**/node_modules/*/**": true
+        },
+        "cSpell.language": "en,es",
+        "cSpell.enableFiletypes": [
+            "ts",
+            "!sql",
+            "!json",
+            "!js",
+            "!sh"
+        ],
+        "cSpell.words": [],
+        "typescript.tsdk": "node_modules/typescript/lib",
+        "workbench.colorCustomizations": {
+            "activityBar.activeBackground": "#010101",
+            "activityBar.background": "#010101",
+            "activityBar.foreground": "#e7e7e7",
+            "activityBar.inactiveForeground": "#e7e7e799",
+            "activityBarBadge.background": "#782828",
+            "activityBarBadge.foreground": "#e7e7e7",
+            "commandCenter.border": "#e7e7e799",
+            "sash.hoverBorder": "#010101",
+            "statusBar.background": "#010101",
+            "statusBar.foreground": "#e7e7e7",
+            "statusBarItem.hoverBackground": "#1a1a1a",
+            "statusBarItem.remoteBackground": "#010101",
+            "statusBarItem.remoteForeground": "#e7e7e7",
+            "titleBar.activeBackground": "#1b1b1b",
+            "titleBar.activeForeground": "#e7e7e7",
+            "titleBar.inactiveBackground": "#1b1b1b99",
+            "titleBar.inactiveForeground": "#e7e7e799"
+        }
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "inputs": [
+            {
+              "id": "skipBuild",
+              "type": "pickString",
+              "description": "Do you want to skip build process?",
+              "options": [
+                "yes",
+                "no"
+              ]
+            }
+        ],
+        "tasks": [
+            {
+                "label": "Build",
+                "type": "shell",
+                "command": "[ ${input:skipBuild} = yes ] && (npm run build) || echo 'skiping build process'",
+                "options": {
+                "env": {
+                    "TEST_JEST": "true"
+                },
+                "cwd": "${workspaceFolder}"
+                },
+                "dependsOrder": "sequence",
+                "isBackground": true,
+                "group": {
+                "kind": "build",
+                "isDefault": true
+                },
+                "problemMatcher": {
+                "fileLocation": "absolute",
+                "pattern": {
+                    "regexp": "SyntaxError: (.*): (.*) \\((\\d+):(\\d+)\\)",
+                    "file": 1,
+                    "line": 3,
+                    "column": 4,
+                    "message": 2
+                },
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^> stark-be@1\\.0\\.0 watch.*",
+                    "endsPattern": "^> onchange.*"
+                }
+                },
+                "presentation": {
+                    "reveal": "never",
+                    "panel": "shared"
+                }
+            }
+        ],
+    },
+    "launch": {
+        "version": "0.2.0",
+        "inputs": [
+            {
+                "id": "currentFileToTest",
+                "type": "command",
+                "command": "shellCommand.execute",
+                "args": {
+                    "command": "({(echo '${file}' | sed -e 's|${workspaceFolder}/||'); }) | cat  | egrep 'int.test.ts$'",
+                    "useFirstResult": true
+                }
+            },
+        ],
+        "configurations": [
+            {
+                "name": "Workspace - Debug Current Test File",
+                "type": "node",
+                "request": "launch",
+                "cwd": "${workspaceFolder}",
+                "skipFiles": [
+                  "<node_internals>/**"
+                ],
+                "program": "${workspaceFolder}/node_modules/.bin/jest",
+                "internalConsoleOptions": "openOnSessionStart",
+                "console": "internalConsole",
+                "outputCapture": "std",
+                "port": 5858,
+                "sourceMaps": true,
+                "smartStep": true,
+                "env": {
+                  "IS_INTEGRATION": "false",
+                  "DB_NAME": "db_test",
+                  "IS_TEST": "test",
+                  "NODE_OPTIONS": "--max-old-space-size=16384"
+                },
+                "envFile": "${fileWorkspaceFolder}/.env",
+                "runtimeArgs": [
+                  "--inspect-port=5858",
+                  "--enable-source-maps"
+                ],
+                "preLaunchTask": "Build",
+                "args": [
+                  "--config",
+                  "${fileWorkspaceFolder}/jest.config.js",
+                  "--detectOpenHandles",
+                  "--forceExit",
+                  "--verbose",
+                  "--colors",
+                  "${input:currentFileToTest}"
+                ]
+            },
+        ],
+        "compounds": []
+    },    
+}
