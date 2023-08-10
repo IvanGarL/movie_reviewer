@@ -10,11 +10,9 @@ export class UpdateReviewTableAndConstraints1691645547945 implements MigrationIn
         await queryRunner.query(`ALTER TABLE "user" ADD CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb" UNIQUE ("username")`);
         await queryRunner.query(`CREATE INDEX "IDX_e07711717f71083f97fef1d68d" ON "review" ("username") `);
         await queryRunner.query(`ALTER TABLE "review" ADD CONSTRAINT "CHK_a483c3db380184625a9f6a5ec4" CHECK (rating >= 1 AND rating <= 10)`);
-        await queryRunner.query(`ALTER TABLE "review" ADD CONSTRAINT "movie_review_by_user" UNIQUE ("movie_tmdb_id", "username")`);
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE "review" DROP CONSTRAINT "movie_review_by_user"`);
         await queryRunner.query(`ALTER TABLE "review" DROP CONSTRAINT "CHK_a483c3db380184625a9f6a5ec4"`);
         await queryRunner.query(`DROP INDEX "public"."IDX_e07711717f71083f97fef1d68d"`);
         await queryRunner.query(`ALTER TABLE "user" DROP CONSTRAINT "UQ_78a916df40e02a9deb1c4b75edb"`);

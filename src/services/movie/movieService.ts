@@ -100,7 +100,7 @@ export default class MovieService {
         const getMovieReviewsValidationSchema = J.object({
             tmdbId: J.number().min(1).required(),
         });
-        return middleware(req, res, {
+        return await middleware(req, res, {
             pathsValidation: getMovieReviewsValidationSchema,
             roles: [UserRoles.USER],
             validateToken: true,

@@ -77,7 +77,7 @@ export const middleware = async (req: AuthRequest, res: Response, middlewareOpti
         if (error)
             return res.status(400).send({ error: 'Request path params Validation Error\n'.concat(error.message) });
     }
-    console.log(req.hostname, req.originalUrl, req.path, req.body, req.method, req.headers);
+    console.log(req.hostname, req.originalUrl, req.body, req.method, req.headers);
 
     // connect to dabatase
     let manager: EntityManager;

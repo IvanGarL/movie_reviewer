@@ -44,7 +44,7 @@ export default class ReviewService {
             rating: J.number().min(1).max(10).precision(2).required(),
             comment: J.string().optional().allow(''),
         });
-        return middleware(req, res, {
+        return await middleware(req, res, {
             bodyValidation: submitReviewValidationSchema,
             roles: [UserRoles.USER],
             validateToken: true,
@@ -61,8 +61,9 @@ export default class ReviewService {
 
                 if (existingReview) {
                     const updatePayload = comment ? { rating, comment } : { rating };
-                    await manager.update(Review, { id: existingReview.id }, updatePayload);
-                    res.status(200).send({ message: 'Review updated successfully' });
+                    await manager.update(Review, existingReview.id , updatePayload);
+
+                    return res.status(200).send({ message: 'Review updated successfully' });
                 }
 
                 const { userId } = req.decodedToken;
@@ -75,6 +76,7 @@ export default class ReviewService {
                         comment: comment || '',
                         movieTMDBId: tmdbId,
                         username: userName,
+                        userId: user.id,
                     }),
                 );
 

@@ -41,7 +41,7 @@ export default class UsersService {
             password: J.string().min(10).required(),
             passwordConfirmation: J.string().min(10).required(),
         });
-        return middleware(req, res, {
+        return await middleware(req, res, {
             bodyValidation: signUpValidationSchema,
             validateToken: false,
             handler: async (req: Request, res: Response, manager: EntityManager) => {
@@ -109,7 +109,7 @@ export default class UsersService {
             email: J.string().email().required(),
             password: J.string().min(10).required(),
         });
-        return middleware(req, res, {
+        return await middleware(req, res, {
             bodyValidation: logInValidationSchema,
             validateToken: false,
             handler: async (req: Request, res: Response, manager: EntityManager) => {

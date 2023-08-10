@@ -2,7 +2,6 @@ import { Check, Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, 
 import { User } from './User';
 import { Movie } from './Movie';
 
-@Unique('movie_review_by_user', ['movieTmdbId', 'username'])
 @Entity()
 export class Review {
     /**
@@ -23,7 +22,7 @@ export class Review {
      */
     @Index()
     @Column()
-    userId: number;
+    userId: string;
 
     /**
      * Unique id of the user
@@ -71,12 +70,13 @@ export class Review {
     @JoinColumn({ referencedColumnName: 'tmdbId',  name: 'movie_tmdb_id' })
     movie: Movie;
 
-    constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string }) {
+    constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string, userId: string }) {
         if (payload) {
             this.rating = payload.rating;
             this.comment = payload.comment;
             this.movieTmdbId = payload.movieTMDBId;
             this.username = payload.username;
+            this.userId = payload.userId;
         }
     }
 
