@@ -3,7 +3,8 @@
     "license": "Apache license Version 2.0",
     "version": "0.0.0",
     "scripts": {
-        "start": "npm run build && cross-env NODE_PATH=./dist && nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
+        "start:dev": "npm run build && cross-env NODE_PATH=./dist && nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
+        "start": "npm run build && cross-env NODE_PATH=./dist && ts-node src/server.ts",
         "debug": "cross-env NODE_ENV=./src node --inspect -r ts-node src/server.ts",
         "build": "rm -rf ./dist && mkdir dist && tsc",
         "db-migrations": "npm run build && npx ts-node ./node_modules/typeorm/cli migration:run -d ./src/database/db.config.ts",
