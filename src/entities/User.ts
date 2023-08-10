@@ -1,5 +1,5 @@
 import { Chance } from 'chance';
-import { Column, CreateDateColumn, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Review } from './Review';
 
 /**
@@ -18,7 +18,7 @@ export class User {
     /**
      * username of the user
      */
-    @Column({ length: 50, nullable: true })
+    @Column({ length: 50, nullable: true, unique: true })
     username?: string;
 
     /**
@@ -45,6 +45,9 @@ export class User {
     @CreateDateColumn()
     createdAt: Date;
 
+    /**
+     * Reviews of the user
+     */
     @OneToMany(() => Review, (review) => review.user)
     reviews: Review[];
 

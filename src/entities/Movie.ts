@@ -46,6 +46,9 @@ export class Movie {
     @CreateDateColumn()
     createdAt: Date;
 
+    /**
+     * Reviews of the movie
+     */
     @OneToMany(() => Review, (review) => review.movie)
     reviews: Review[];
 

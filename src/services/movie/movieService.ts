@@ -4,22 +4,33 @@ import { DatabaseConnection } from '../../database/db';
 import { Movie } from '../../entities/Movie';
 import { TheMovieDBAPIClient, TmdbMovie } from '../../utils/tmdb';
 export default class MovieService {
-    public async loadMoviesToDB(tmdbClient: TheMovieDBAPIClient): Promise<void> {
+    /**
+     * 
+     * @param tmdbClient 
+     * @param pagesToLoad 
+     */
+    public async loadMoviesToDB(tmdbClient: TheMovieDBAPIClient, pagesToLoad: number): Promise<void> {
+        console.log('Loading movies to DB...');
         const manager = (await DatabaseConnection.getInstance()).getConnectionManager();
 
         const tmdbMoviesMap = new Map<number, TmdbMovie>();
-        _.range(50).forEach(async (page: number) => {
-            // each page has 20 movies
-            const { results } = await tmdbClient.getPopularMovies({
-                params: { page },
-            });
+        await Promise.all(
+            _.range(pagesToLoad).map(async (page: number) => {
+                // each page has 20 movies
+                const { results } = await tmdbClient.getPopularMovies({
+                    params: { page: page + 1 },
+                });
 
-            results.forEach((movie: TmdbMovie) => {
-                tmdbMoviesMap.set(movie.id, movie);
-            });
+                results.forEach((movie: TmdbMovie) => {
+                    tmdbMoviesMap.set(movie.id, movie);
+                });
+            }),
+        );
+
+        const dbMovies = await manager.find(Movie, {
+            select: ['tmdbId'],
+            where: { tmdbId: In([...tmdbMoviesMap.keys()]) },
         });
-
-        const dbMovies = await manager.find(Movie, { where: { tmdbId: In([...tmdbMoviesMap.keys()]) } });
         dbMovies.forEach((dbMovie) => {
             tmdbMoviesMap.delete(dbMovie.tmdbId);
         });
@@ -29,8 +40,8 @@ export default class MovieService {
                 tmdbId: tmdbMovie.id,
                 title: tmdbMovie.title,
                 overview: tmdbMovie.overview,
-                posterPath: tmdbClient.getImgUrl(tmdbMovie.poster_path),
-                releaseDate: new Date(tmdbMovie.release_date),
+                posterPath: tmdbMovie.poster_path ? tmdbClient.getImgUrl(tmdbMovie.poster_path) : null,
+                releaseDate: tmdbMovie.release_date ? new Date(tmdbMovie.release_date) : null,
             });
         });
 

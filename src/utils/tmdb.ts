@@ -149,6 +149,7 @@ export class TheMovieDBAPIClient {
         path?: TheMovieDBRequestPaths[R];
         payload?: TheMovieDBPayloads[R];
         params?: TheMovieDBRequestParams[R];
+        logResponse?: boolean;
     }): Promise<TheMovieDBRequestResponse[R]> {
 
         const url = replaceStringParameters(TheMovieDBRequestURI[request], config?.path);
@@ -160,18 +161,18 @@ export class TheMovieDBAPIClient {
         };
 
         if(config?.payload) {
-            console.log('request body', config.payload);
             options.data = config.payload;
         }
 
         if(config?.params) {
-            console.log('request params', config.params);
             options.params = config.params;
         }
 
         try {
+            console.log('TheMovieDB API request: ', JSON.stringify(options));
+            
             const response = await PromiseTimeout(axios.request(options), 15000);
-            console.log('TheMovieDB API response: ', JSON.stringify(response?.data));
+            if (config.logResponse) console.log('TheMovieDB API response: ', JSON.stringify(response?.data));
 
             return response?.data as TheMovieDBRequestResponse[R];
         } catch (error) {
@@ -185,7 +186,7 @@ export class TheMovieDBAPIClient {
      * @returns The API configuration
      */
     public async getApiConfiguration(): Promise<TheMovieDBRequestResponse[TheMovieDBRequest.GET_API_CONFIGURATION]> {
-        const response = await this.request(TheMovieDBRequest.GET_API_CONFIGURATION);
+        const response = await this.request(TheMovieDBRequest.GET_API_CONFIGURATION, { logResponse: true });
         this.imgBaseUrl = response.images.secure_base_url;
 
         return response;
@@ -199,7 +200,7 @@ export class TheMovieDBAPIClient {
     public async getPopularMovies(config?: {
         params?: TheMovieDBRequestParams[TheMovieDBRequest.GET_POPULAR_MOVIES];
     }): Promise<TheMovieDBRequestResponse[TheMovieDBRequest.GET_POPULAR_MOVIES]> {
-        return this.request(TheMovieDBRequest.GET_POPULAR_MOVIES, config);
+        return this.request(TheMovieDBRequest.GET_POPULAR_MOVIES, { ...config, logResponse: false });
     }
 
     /**
@@ -217,6 +218,7 @@ export class TheMovieDBAPIClient {
             params: {
                 guest_session_id: this.guestSessionId,
             },
+            logResponse: true,
         });
     }
 

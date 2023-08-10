@@ -1,11 +1,10 @@
 import 'dotenv/config';
 import * as express from 'express';
 import { EntityManager } from 'typeorm';
+import { AppController, AppService, Controller } from './common/appCommonTypes';
 import { DatabaseConnection } from './database/db';
 import errorMiddleware from './middlewares/error';
-import Controller, { AppService } from './common/serviceCommonTypes';
 import { TheMovieDBAPIClient } from './utils/tmdb';
-import { MovieController } from './services/movie/movieController';
 class App {
     public app: express.Application;
     public port: string | number;
@@ -17,7 +16,11 @@ class App {
         this.app = express();
         this.port = process.env.PORT || 8081;
         this.controllers = controllers;
-        this.tmdbClient = new TheMovieDBAPIClient(process.env.TMDB_BASE_URL, process.env.TMDB_API_KEY, process.env.TMDB_GUEST_SESSION_ID);
+        this.tmdbClient = new TheMovieDBAPIClient(
+            process.env.TMDB_BASE_URL,
+            process.env.TMDB_API_KEY,
+            process.env.TMDB_GUEST_SESSION_ID,
+        );
 
         this.initializeMiddlewares();
         this.initializeErrorHandling();
@@ -35,7 +38,7 @@ class App {
 
     /**
      * Initializes the controllers
-     * @param controllers 
+     * @param controllers
      */
     private initializeRoutes(controllers: Controller[]) {
         controllers.forEach((controller) => {
@@ -67,12 +70,12 @@ class App {
     public async listen() {
         await this.initializeConnection();
         this.app.listen(this.port, () => {
-            console.log(`🚀 App listening on the port ${this.port}`);
+            console.log(`\n🚀 App listening on the port ${this.port}`);
         });
     }
 
-    public getMovieController(): MovieController {
-        return this.controllers[AppService.MOVIE] as MovieController;
+    public getController<S extends AppService>(service: S): AppController[S] {
+        return this.controllers.find((controller) => controller.service === service) as AppController[S];
     }
 
     /**
