@@ -11,6 +11,16 @@ services:
       POSTGRES_DB: "db"
     volumes:
       - ./pgdata:/var/lib/postgresql/data
+  db_test:
+    image: postgres
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "db_test"
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
   backend_app:
     build: .
     depends_on:
@@ -20,5 +30,6 @@ services:
       - "9229:9229"
     links:
       - db
+      - db_test
     stdin_open: true
     tty: true
