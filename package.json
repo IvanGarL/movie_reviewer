@@ -5,7 +5,7 @@
     "scripts": {
         "start": "npm run build && cross-env NODE_PATH=./dist && nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts",
         "debug": "cross-env NODE_ENV=./src node --inspect -r ts-node src/server.ts",
-        "build": "tsc",
+        "build": "rm -rf ./dist && mkdir dist && tsc",
         "db-migrations": "npm run build && npx ts-node ./node_modules/typeorm/cli migration:run -d ./src/database/db.config.ts",
         "test": "jest --forceExit --detectOpenHandles",
         "docs": "npx typedoc --entryPointStrategy expand ./src --out ./docs",

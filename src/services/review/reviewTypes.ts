@@ -1,28 +1,15 @@
-import { UserRoles } from 'entities/User';
-
 /**
- * Payload for the User register request
+ * Response for the POST /reviews endpoint
  */
-export interface UserSignUpRequest {
-    name?: string;
-    email: string;
-    password: string;
-    passwordConfirmation: string;
-}
-
-/**
- * Payload for the User logIn request
- */
-export interface UserLogInRequest {
-    email: string;
-    password: string;
-}
-
-/**
- * Payload for the User register response
- */
-export interface UserSignUpResponse {
-    token: string;
-    email: string;
-    role: UserRoles;
+export interface SubmitReviewResponse {
+    message: string;
+    review: {
+        id: string;
+        tmdbId: number;
+        username: string;
+        rating: number;
+        comment: string;
+        createdAt: Date;
+        updatedAt: Date;
+    };
 }

@@ -6,6 +6,7 @@ import { Review } from '../../entities/Review';
 import { User, UserRoles } from '../../entities/User';
 import { middleware } from '../../middlewares/auth';
 import HttpError from '../../utils/exception';
+import { mapReview } from './reviewMappers';
 
 export default class ReviewService {
     /**
@@ -61,7 +62,7 @@ export default class ReviewService {
 
                 if (existingReview) {
                     const updatePayload = comment ? { rating, comment } : { rating };
-                    await manager.update(Review, existingReview.id , updatePayload);
+                    await manager.update(Review, existingReview.id, updatePayload);
 
                     return res.status(200).send({ message: 'Review updated successfully' });
                 }
@@ -80,8 +81,7 @@ export default class ReviewService {
                     }),
                 );
 
-                // TODO: create mapper to map entity to response object
-                return res.status(201).send({ message: 'Review created successfully', review: newReview });
+                return res.status(201).send(mapReview('Review created successfully', newReview));
             },
         });
     }

@@ -34,8 +34,8 @@ export class Review {
     /**
      * Rating of the movie
      */
-    @Column('numeric', { precision: 2, scale: 1, default: 0 })
-    @Check('rating >= 1 AND rating <= 10')
+    @Column('numeric', { precision: 4, scale: 2, default: 1.0 })
+    @Check('rating >= 1.0 AND rating <= 10.0')
     rating: number;
 
     /**
