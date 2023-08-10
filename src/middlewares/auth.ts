@@ -35,7 +35,7 @@ const validateRoles = (allowedRoles: UserRoles[], userRole: UserRoles) => {
  * @param {Response} res
  * @param {Middleware} middleware
  */
-export const middleware = async (req: AuthRequest, res: Response, middlewareOptions: MiddlewareOptions) => {
+export const middleware = async (req: AuthRequest, res: Response, middlewareOptions: MiddlewareOptions): Promise<any> => {
     // validate token and role
     const token = req.headers.authorization;
     const { validateToken, roles, bodyValidation, queryValidation, handler } = middlewareOptions;

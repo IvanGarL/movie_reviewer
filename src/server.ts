@@ -1,7 +1,9 @@
 import App from './app';
+import { MovieController } from './services/movie/movieController';
 import { UserController } from './services/user/userController';
 
-const app = new App([new UserController()]);
+const app = new App([new UserController(), new MovieController()]);
 
-app.listen();
+app.getMovieController().loadMovies(app.tmdbClient);
 app.getAvailableRoutes();
+app.listen();

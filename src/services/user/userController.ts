@@ -10,10 +10,12 @@ enum UserRoutes {
 export class UserController implements Controller {
     path: string;
     router: Router;
+    needsTmdbClient: boolean;
     private usersService: UsersService;
 
     constructor() {
         this.path = '/users'
+        this.needsTmdbClient = false;
         this.router = Router();
         this.usersService = new UsersService();
         this.initializeRoutes();

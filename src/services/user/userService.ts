@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import * as J from 'joi';
 import { EntityManager } from 'typeorm';
 import { AuthRequest } from '../../common/authCommonTypes';
-import { middleware } from '../../middlewares/auth.middleware';
+import { middleware } from '../../middlewares/auth';
 import { User, UserRoles } from '../../entities/User';
 import { getHashedPassword, generateJWT, passwordMatch } from '../../utils/encryption';
 import HttpError from '../../utils/exception';
@@ -34,7 +34,7 @@ export default class UsersService {
      *      "role": "USER"
      * }
      */
-    register = async (req: AuthRequest, res: Response): Promise<void> => {
+    public async register(req: AuthRequest, res: Response): Promise<void> {
         const signUpValidationSchema = J.object({
             name: J.string().optional(),
             email: J.string().email().required(),
@@ -104,7 +104,7 @@ export default class UsersService {
      *      "email": "ivangarl@yopmail.com",
      * }
      */
-    logIn = async (req: AuthRequest, res: Response) => {
+    public async logIn(req: AuthRequest, res: Response): Promise<void> {
         const logInValidationSchema = J.object({
             email: J.string().email().required(),
             password: J.string().min(10).required(),
