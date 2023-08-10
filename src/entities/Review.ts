@@ -12,6 +12,27 @@ export class Review {
     id: string;
 
     /**
+     * Unique id of the movie from TMDB
+     */
+    @Index()
+    @Column()
+    movieTmdbId: number;
+
+    /**
+     * Unique id of the movie from TMDB
+     */
+    @Index()
+    @Column()
+    userId: number;
+
+    /**
+     * Unique id of the user
+     */
+    @Index()
+    @Column()
+    username: string;
+
+    /**
      * Rating of the movie
      */
     @Column('numeric', { precision: 2, scale: 1, default: 0 })
@@ -23,20 +44,6 @@ export class Review {
      */
     @Column({ type: 'text' })
     comment: string;
-
-    /**
-     * Unique id of the movie from TMDB
-     */
-    @Index()
-    @Column()
-    movieTmdbId: number;
-
-    /**
-     * Unique id of the user
-     */
-    @Index()
-    @Column()
-    username: string;
 
     /**
      * Date of creation of the review in the database
@@ -54,14 +61,14 @@ export class Review {
      * User who made the review
      */
     @ManyToOne(() => User, (user) => user.reviews)
-    @JoinColumn({ name: 'userId' })
+    @JoinColumn({ name: 'user_id' })
     user: User;
 
     /**
      * Movie which the review is made to
      */
     @ManyToOne(() => Movie, (movie) => movie.reviews)
-    @JoinColumn({ name: 'movieTMDBId' })
+    @JoinColumn({ name: 'movie_tmdb_id' })
     movie: Movie;
 
     constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string }) {

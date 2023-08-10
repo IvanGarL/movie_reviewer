@@ -4,7 +4,7 @@ import { UserRoles } from 'entities/User';
  * Payload for the User register request
  */
 export interface UserSignUpRequest {
-    name?: string;
+    username?: string;
     email: string;
     password: string;
     passwordConfirmation: string;

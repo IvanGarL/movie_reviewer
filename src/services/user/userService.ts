@@ -36,7 +36,7 @@ export default class UsersService {
      */
     public async register(req: AuthRequest, res: Response): Promise<void> {
         const signUpValidationSchema = J.object({
-            name: J.string().optional(),
+            username: J.string().required(),
             email: J.string().email().required(),
             password: J.string().min(10).required(),
             passwordConfirmation: J.string().min(10).required(),
@@ -48,20 +48,20 @@ export default class UsersService {
                 let newUser: User;
                 let token: string;
                 try {
-                    const { name, email, password, passwordConfirmation }: UserSignUpRequest = req.body;
+                    const { username, email, password, passwordConfirmation }: UserSignUpRequest = req.body;
 
                     if (password !== passwordConfirmation) throw new HttpError(400, 'Passwords dont match');
 
-                    const existingUser = await manager.findOne(User, { where: { email } });
+                    const existingUser = await manager.findOne(User, { where: [{ email }, { username }] });
 
                     if (existingUser) {
-                        throw new HttpError(409, `A user with the email ${email} already exists`);
+                        throw new HttpError(409, `A user with the email ${email} or ${username} already exists`);
                     }
 
                     await manager.transaction(async (tmanager) => {
                         const hashPassword = await getHashedPassword(password);
                         newUser = new User({
-                            name: name ? name.trim() : null,
+                            username: username ? username.trim() : null,
                             email: email.toLowerCase(),
                             password: hashPassword,
                             role: UserRoles.USER,

@@ -51,11 +51,11 @@ export class User {
     @OneToMany(() => Review, (review) => review.user)
     reviews: Review[];
 
-    constructor(payload?: { name: string; email: string; password: string; role: UserRoles }) {
+    constructor(payload?: { username: string; email: string; password: string; role: UserRoles }) {
         if (payload) {
             this.id = new Chance().guid();
             this.email = payload.email;
-            this.username = payload.name;
+            this.username = payload.username;
             this.password = payload.password;
             this.role = payload.role;
         }
