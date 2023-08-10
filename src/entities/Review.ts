@@ -68,7 +68,7 @@ export class Review {
      * Movie which the review is made to
      */
     @ManyToOne(() => Movie, (movie) => movie.reviews)
-    @JoinColumn({ name: 'movie_tmdb_id' })
+    @JoinColumn({ referencedColumnName: 'tmdbId',  name: 'movie_tmdb_id' })
     movie: Movie;
 
     constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string }) {
