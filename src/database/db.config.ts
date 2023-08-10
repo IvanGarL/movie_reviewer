@@ -11,7 +11,7 @@ export const dbConfig: PostgresConnectionOptions = {
     synchronize: isTestEnv(),
     migrationsRun: !isTestEnv(),
     namingStrategy: new SnakeNamingStrategy(),
-    logging: !isTestEnv(),
+    logging: false,
     host: '0.0.0.0',
     username: 'postgres',
     password: 'postgres',
