@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Response } from 'express';
 import * as J from 'joi';
 import { EntityManager } from 'typeorm';
@@ -6,6 +7,7 @@ import { Review } from '../../entities/Review';
 import { User, UserRoles } from '../../entities/User';
 import { middleware } from '../../middlewares/auth';
 import HttpError from '../../utils/exception';
+import { TheMovieDBAPIClient } from '../../utils/tmdb';
 import { mapReview } from './reviewMappers';
 
 export default class ReviewService {
@@ -52,6 +54,7 @@ export default class ReviewService {
             handler: async (req: AuthRequest, res: Response, manager: EntityManager) => {
                 if (!req.body) throw new HttpError(400, 'Invalid request body parameters');
 
+                const saveReviewsInTMDB = process.env.TMDB_PERSIST_REVIEWS;
                 const { tmdbId, userName, rating, comment } = req.body;
                 const existingReview = await manager.findOne(Review, {
                     where: {
@@ -63,6 +66,13 @@ export default class ReviewService {
                 if (existingReview) {
                     const updatePayload = comment ? { rating, comment } : { rating };
                     await manager.update(Review, existingReview.id, updatePayload);
+                    if (saveReviewsInTMDB) {
+                        const tmdbClient = TheMovieDBAPIClient.getInstance();
+                        await tmdbClient.postMovieRating({
+                            path: { id: tmdbId },
+                            payload: { value: Math.round(rating) },
+                        });
+                    }
 
                     return res.status(200).send({ message: 'Review updated successfully' });
                 }
@@ -80,6 +90,13 @@ export default class ReviewService {
                         userId: user.id,
                     }),
                 );
+                if (saveReviewsInTMDB) {
+                    const tmdbClient = TheMovieDBAPIClient.getInstance();
+                    await tmdbClient.postMovieRating({
+                        path: { id: tmdbId },
+                        payload: { value: Math.round(rating) },
+                    });
+                }
 
                 return res.status(201).send(mapReview('Review created successfully', newReview));
             },

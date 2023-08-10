@@ -4,23 +4,16 @@ import { EntityManager } from 'typeorm';
 import { AppController, AppService, Controller } from './common/appCommonTypes';
 import { DatabaseConnection } from './database/db';
 import errorMiddleware from './middlewares/error';
-import { TheMovieDBAPIClient } from './utils/tmdb';
 class App {
     public app: express.Application;
     public port: string | number;
     public databaseConnection: DatabaseConnection;
     public controllers: Controller[];
-    public tmdbClient: TheMovieDBAPIClient;
 
     constructor(controllers: Controller[]) {
         this.app = express();
         this.port = process.env.PORT || 8081;
         this.controllers = controllers;
-        this.tmdbClient = new TheMovieDBAPIClient(
-            process.env.TMDB_BASE_URL,
-            process.env.TMDB_API_KEY,
-            process.env.TMDB_GUEST_SESSION_ID,
-        );
 
         this.initializeMiddlewares();
         this.initializeErrorHandling();

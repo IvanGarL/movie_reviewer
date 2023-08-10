@@ -26,8 +26,8 @@ export class MovieController implements Controller {
      * @param {TheMovieDBAPIClient} tmdbClient the client to use to fetch the movies from the API
      * @param {number} pagesToLoad number of pages to fetch from the API and load to the database
      */
-    public async loadMovies(tmdbClient: TheMovieDBAPIClient, pagesToLoad: number): Promise<void> {
-        await tmdbClient.getApiConfiguration();
+    public async loadMovies(pagesToLoad: number): Promise<void> {
+        const tmdbClient = TheMovieDBAPIClient.getInstance();
         await this.movieService.loadMoviesToDB(tmdbClient, pagesToLoad);
     }
 
