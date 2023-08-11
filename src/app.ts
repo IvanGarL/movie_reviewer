@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import * as express from 'express';
+import { Server } from 'http';
 import { EntityManager } from 'typeorm';
 import { AppController, AppService, Controller } from './common/appCommonTypes';
 import { DatabaseConnection } from './database/db';
@@ -9,6 +10,7 @@ class App {
     public port: string | number;
     public databaseConnection: DatabaseConnection;
     public controllers: Controller[];
+    public server: Server;
 
     constructor(controllers: Controller[]) {
         this.app = express();
@@ -62,7 +64,7 @@ class App {
      */
     public async listen() {
         await this.initializeConnection();
-        this.app.listen(this.port, () => {
+        this.server = this.app.listen(this.port, () => {
             console.log(`\n🚀 App listening on the port ${this.port}`);
         });
     }
@@ -94,6 +96,13 @@ class App {
         this.controllers.forEach((controller) => {
             controller.getAvailableRoutes();
         });
+    }
+
+    /**
+     * Closes the http server
+     */
+    public async close(): Promise<void> {
+        this.server.close();
     }
 }
 

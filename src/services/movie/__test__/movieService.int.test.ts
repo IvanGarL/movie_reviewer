@@ -31,6 +31,7 @@ beforeEach(async () => {
 afterAll(async () => {
     await app.databaseConnection.resetConnections();
     await app.databaseConnection.closeConnection();
+    await app.close();
 });
 
 describe('When sending a request', () => {
