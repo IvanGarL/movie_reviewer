@@ -129,7 +129,7 @@
                 },
                 "background": {
                     "activeOnStart": true,
-                    "beginsPattern": "^> stark-be@1\\.0\\.0 watch.*",
+                    "beginsPattern": "^> movie_reviewer@1\\.0\\.0 watch.*",
                     "endsPattern": "^> onchange.*"
                 }
                 },
