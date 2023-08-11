@@ -90,7 +90,7 @@ export class DatabaseConnection {
                             'SELECT * FROM information_schema.sequences',
                         );
                         const restartSequences: Promise<any>[] = [];
-                        sequences.forEach(seq => {
+                        sequences.forEach((seq) => {
                             if (seq.sequence_name !== 'migrations_id_seq') {
                                 restartSequences.push(
                                     this.dataSource.manager.query(`ALTER SEQUENCE ${seq.sequence_name} RESTART;`),

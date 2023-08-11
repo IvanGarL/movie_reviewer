@@ -1,7 +1,7 @@
 const testMatch = ['**/*.test.ts'];
 /* eslint-disable */
 module.exports = {
-    displayName: 'web-scraper-test',
+    displayName: 'movire-reviewer-test',
     roots: ['src/', 'node_modules/'],
     globals: {},
     transform: {

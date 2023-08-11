@@ -9,6 +9,7 @@ import { middleware } from '../../middlewares/auth';
 import HttpError from '../../utils/exception';
 import { TheMovieDBAPIClient } from '../../utils/tmdb';
 import { mapReview } from './reviewMappers';
+import { isTestEnv } from '../../utils/environment';
 
 export default class ReviewService {
     /**
@@ -54,7 +55,7 @@ export default class ReviewService {
             handler: async (req: AuthRequest, res: Response, manager: EntityManager) => {
                 if (!req.body) throw new HttpError(400, 'Invalid request body parameters');
 
-                const saveReviewsInTMDB = process.env.TMDB_PERSIST_REVIEWS;
+                const saveReviewsInTMDB = isTestEnv() ? false :process.env.TMDB_PERSIST_REVIEWS;
                 const { tmdbId, userName, rating, comment } = req.body;
                 const existingReview = await manager.findOne(Review, {
                     where: {

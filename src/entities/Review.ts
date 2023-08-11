@@ -1,6 +1,32 @@
-import { Check, Column, CreateDateColumn, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from 'typeorm';
-import { User } from './User';
+import {
+    Check,
+    Column,
+    CreateDateColumn,
+    Entity,
+    Index,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+    ValueTransformer,
+} from 'typeorm';
 import { Movie } from './Movie';
+import { User } from './User';
+
+/**
+ * Transformer to convert string to number
+ */
+class ColumnNumericTransformer implements ValueTransformer {
+    to(data: number): number {
+        return data;
+    }
+
+    from(data: string): number {
+        if (data === null) return null;
+
+        return Number(data);
+    }
+}
 
 @Entity()
 export class Review {
@@ -34,7 +60,7 @@ export class Review {
     /**
      * Rating of the movie
      */
-    @Column('numeric', { precision: 4, scale: 2, default: 1.0 })
+    @Column('numeric', { precision: 4, scale: 2, default: 1.0, transformer: new ColumnNumericTransformer() })
     @Check('rating >= 1.0 AND rating <= 10.0')
     rating: number;
 
@@ -67,10 +93,10 @@ export class Review {
      * Movie which the review is made to
      */
     @ManyToOne(() => Movie, (movie) => movie.reviews)
-    @JoinColumn({ referencedColumnName: 'tmdbId',  name: 'movie_tmdb_id' })
+    @JoinColumn({ referencedColumnName: 'tmdbId', name: 'movie_tmdb_id' })
     movie: Movie;
 
-    constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string, userId: string }) {
+    constructor(payload?: { rating: number; comment: string; movieTMDBId: number; username: string; userId: string }) {
         if (payload) {
             this.rating = payload.rating;
             this.comment = payload.comment;
@@ -79,5 +105,4 @@ export class Review {
             this.userId = payload.userId;
         }
     }
-
 }

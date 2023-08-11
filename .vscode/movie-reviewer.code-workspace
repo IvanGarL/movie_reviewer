@@ -166,14 +166,11 @@
                 "internalConsoleOptions": "openOnSessionStart",
                 "console": "internalConsole",
                 "outputCapture": "std",
-                "port": 5858,
                 "sourceMaps": true,
                 "smartStep": true,
                 "env": {
-                  "IS_INTEGRATION": "false",
-                  "DB_NAME": "db_test",
                   "IS_TEST": "test",
-                  "NODE_OPTIONS": "--max-old-space-size=16384"
+                  "NODE_OPTIONS": "--max-old-space-size=16384",
                 },
                 "envFile": "${fileWorkspaceFolder}/.env",
                 "runtimeArgs": [
