@@ -1,4 +1,3 @@
-import * as Chance from 'chance';
 import { DateTime } from 'luxon';
 import * as request from 'supertest';
 import { EntityManager } from 'typeorm';

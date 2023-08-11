@@ -8,7 +8,7 @@
         "debug": "cross-env NODE_ENV=./src node --inspect -r ts-node src/server.ts",
         "build": "rm -rf ./dist && mkdir dist && tsc",
         "db-migrations": "npm run build && npx ts-node ./node_modules/typeorm/cli migration:run -d ./src/database/db.config.ts",
-        "test": "jest --forceExit --detectOpenHandles",
+        "test": "cross-env IS_TEST=test && jest --forceExit --detectOpenHandles --silent",
         "docs": "npx typedoc --entryPointStrategy expand ./src --out ./docs",
         "api-docs": "npx apidoc -c ./apidoc.json -i ./src/services -o ./ -d -q"
     },
