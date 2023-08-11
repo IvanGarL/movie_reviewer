@@ -1,4 +1,5 @@
 import { UserRoles } from 'entities/User';
+import { ReviewResponse } from '../review/reviewTypes';
 
 /**
  * Payload for the User register request
@@ -35,14 +36,6 @@ export interface UserReviewsResponse {
     username: string;
     email: string;
     role: UserRoles;
-    reviews: {
-        id: string;
-        comment: string;
-        rating: number;
-        tmdbId: number;
-        createdAt: Date;
-        updatedAt: Date;
-    }[];
-    pageCount: number;
+    reviews: ReviewResponse[];
     pages: number;
 }

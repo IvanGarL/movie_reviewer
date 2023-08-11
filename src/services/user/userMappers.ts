@@ -24,7 +24,6 @@ export const mapUserReviews = (user: User, reviews: Review[], pages: number): Us
                   updatedAt: review.updatedAt,
               }))
             : [],
-        pageCount: reviews.length,
         pages,
     };
 };

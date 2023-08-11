@@ -190,7 +190,6 @@ export default class MovieService {
 
                 res.status(200).send({
                     movies: movies.currentPage,
-                    pageCount: movies.currentPage.length,
                     pages: movies.pagesCount,
                 });
             },

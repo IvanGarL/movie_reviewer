@@ -1,3 +1,5 @@
+import { ReviewResponse } from '../review/reviewTypes';
+
 /**
  * Response for the GET /movies/{tmdbId}/reviews endpoint
  */
@@ -8,14 +10,7 @@ export interface MovieReviewsResponse {
     overview: string;
     posterPath: string;
     releaseDate: Date;
-    reviews: {
-        id: string;
-        comment: string;
-        rating: number;
-        username: string;
-        createdAt: Date;
-        updatedAt: Date;
-    }[];
+    reviews: ReviewResponse[];
     pageCount: number;
     pages: number;
 }
