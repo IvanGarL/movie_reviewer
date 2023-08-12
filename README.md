@@ -1,7 +1,9 @@
 # movie_reviewer
 NodeJS server that fetch [The Movie DB](https://developer.themoviedb.org/reference/intro/getting-started) API information and post reviews in postgres database.
 
-Tools used to implement the solution
+## Backend
+
+Tools used to implement the Backend:
 - Express: expose the BackEnd server APIs with a routing framework built-in the library.  
 - TypeORM: implement the relational database schema in the application layer supported on the ORM features.  
 - PostgreSQL: relational database system.  
@@ -11,7 +13,11 @@ Tools used to implement the solution
 - Joi: helps to run REST request body and query-params validations.
 - Jest: integrates with ts-jest for the implementation of the unit tests.
 
-Instructions to run the server
+Instructions to run the backend server
+
+- Enter into the backend directory: 
+
+        cd backend
 
 - Deploy on local machine.  
 
@@ -35,3 +41,5 @@ Instructions to run the server
     
 - Test:
     Run the test suite running: ```npm run test```
+
+## Frontend [WIP]
