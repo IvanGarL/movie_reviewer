@@ -38,38 +38,6 @@
     visibility: visible;
 }
 
-.movie-container {
-    display: flex;
-    width: 80%;
-    border: 1px solid #ccc;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-.movie-image {
-    flex: 1;
-    padding: 20px;
-}
-.movie-image img {
-    max-width: 100%;
-    height: auto;
-}
-.movie-details {
-    flex: 2;
-    padding: 20px;
-}
-.movie-title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-.movie-overview {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-.movie-release-date {
-    font-size: 16px;
-    color: #777;
-}
-
 .submit-button {
     background-color: #007BFF;
     color: #fff;
@@ -77,4 +45,217 @@
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* Styles for the User Profile and Reviews Component */
+
+.user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 20px;
+  }
+  
+  .user-details h2 {
+    margin: 0;
+  }
+  
+  .reviews h3 {
+    margin-top: 0;
+  }
+  
+  .reviews ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .reviews li {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    margin-bottom: 10px;
+  }
+
+  .user-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .user-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .user-details h2 {
+    margin: 0;
+  }
+  
+  .reviews h3 {
+    margin-top: 0;
+  }
+  
+  .reviews ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .reviews li {
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+    margin-bottom: 10px;
+  }
+  
+  /* Optional: Style the stars for the ratings */
+  .star {
+    color: gold;
+    margin-right: 5px;
+  }
+  
+  /* Responsive Styles */
+  
+  @media screen and (min-width: 768px) {
+    .user-info {
+      flex-direction: row;
+      justify-content: center;
+      align-items: flex-start;
+    }
+  
+    .user-image img {
+      margin-bottom: 0;
+      margin-right: 20px;
+    }
+  
+    .reviews {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .reviews li {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .rating-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.movie-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.movie-details {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.movie-image img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 8px;
+}
+
+.movie-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.movie-release-date {
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.movie-overview {
+    font-size: 1rem;
+    margin: 10px 0;
+}
+
+.rating-form {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.rating-input {
+    width: 50px;
+}
+
+.submit-button {
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.spinner-border {
+    margin-right: 5px;
+}
+
+/* Responsive Styles */
+
+@media screen and (min-width: 768px) {
+    .movie-container {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .movie-image {
+        margin-right: 20px;
+    }
+
+    .movie-title {
+        font-size: 2rem;
+    }
+}
+
+#commentInput {
+    width: 100%;
+    max-width: 400px; /* Adjust the maximum width as needed */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
 }

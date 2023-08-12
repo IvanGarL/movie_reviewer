@@ -1,6 +1,52 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import { fetchWrapper } from 'helpers';
+
+function createInitialState() {
+    return {
+        userInfo: {}
+    }
+}
+
+function createExtraActions() {
+    const baseUrl = process.env.REACT_APP_API_URL;  
+
+    function getUserInfo() {
+
+        return createAsyncThunk(
+            `${name}/getUserInfo`,
+            async (username) => {
+                console.log("username: ", username);
+                return await fetchWrapper.get(`${baseUrl}/users/${username}/reviews`)
+            }
+        );
+    }
+
+    return {
+        getUserInfo: getUserInfo()
+    };  
+}
+
+function createExtraReducers() {
+
+    function getUserInfo() {
+        var { pending, fulfilled, rejected } = extraActions.getUserInfo;
+        return {
+            [pending]: (state) => {
+                state.userInfo = { loading: true };
+            },
+            [fulfilled]: (state, action) => {
+                state.userInfo = action.payload;
+            },
+            [rejected]: (state, action) => {
+                state.userInfo = { error: action.error };
+            }
+        };
+    }
+
+    return {
+        ...getUserInfo()
+    };
+}
 
 // create slice
 
@@ -14,48 +60,3 @@ const slice = createSlice({ name, initialState, extraReducers });
 
 export const userActions = { ...slice.actions, ...extraActions };
 export const usersReducer = slice.reducer;
-
-// implementation
-
-function createInitialState() {
-    return {
-        users: {}
-    }
-}
-
-// TODO: remove this
-function createExtraActions() {
-    const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/users`;
-
-    return {
-        getAll: getAll()
-    };    
-
-    function getAll() {
-        return createAsyncThunk(
-            `${name}/getAll`,
-            async () => await fetchWrapper.get(baseUrl)
-        );
-    }
-}
-
-function createExtraReducers() {
-    return {
-        ...getAll()
-    };
-
-    function getAll() {
-        var { pending, fulfilled, rejected } = extraActions.getAll;
-        return {
-            [pending]: (state) => {
-                state.users = { loading: true };
-            },
-            [fulfilled]: (state, action) => {
-                state.users = action.payload;
-            },
-            [rejected]: (state, action) => {
-                state.users = { error: action.error };
-            }
-        };
-    }
-}

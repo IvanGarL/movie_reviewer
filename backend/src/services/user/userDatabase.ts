@@ -8,5 +8,7 @@ import { Review } from '../../entities/Review';
  * @returns {SelectQueryBuilder<Review>}
  */
 export const createUserReviewsQuery = (manager: EntityManager, username: string): SelectQueryBuilder<Review> => {
-    return manager.createQueryBuilder(Review, 'review').where('review.username = :username', { username });
+    return manager.createQueryBuilder(Review, 'review')
+        .innerJoinAndSelect('review.movie', 'movie')
+        .where('review.username = :username', { username });
 };

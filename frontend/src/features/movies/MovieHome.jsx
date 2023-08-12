@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { moviesActions } from "features";
+import { moviesActions, userActions } from "features";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -13,6 +13,7 @@ function MovieHome() {
     const { movies } = useSelector((store) => store.movies);
 
     useEffect(() => {
+        dispatch(userActions.getUserInfo(authUser.username));
         dispatch(moviesActions.getAll());
     }, []);
 

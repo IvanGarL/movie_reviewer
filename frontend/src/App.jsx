@@ -7,6 +7,7 @@ import { Login } from './features/auth/Login';
 import React from 'react';
 import { MovieHome } from './features/movies/MovieHome';
 import { MovieReview } from './features/movies/MovieReview';
+import { UserProfile } from './features/users/UserProfile';
 
 function App() {
     // init custom history object to allow navigation from 
@@ -32,6 +33,14 @@ function App() {
                         element={
                             <PrivateRoute>
                                 <MovieReview />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <PrivateRoute>
+                                <UserProfile />
                             </PrivateRoute>
                         }
                     />

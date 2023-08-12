@@ -4,6 +4,8 @@
 export interface ReviewResponse {
     id: string;
     tmdbId?: number;
+    title?: string;
+    overview?: string;
     username?: string;
     rating: number;
     comment: string;

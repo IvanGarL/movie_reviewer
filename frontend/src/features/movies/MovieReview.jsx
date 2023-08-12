@@ -73,11 +73,7 @@ function MovieReview() {
                 </div>
             </div>
         </div>
-    ) : (
-        <div>
-            <h1>Hi {authUser?.username}!</h1>
-        </div>
-    );
+    ) : history.navigate('/');
 }
 
 export { MovieReview };

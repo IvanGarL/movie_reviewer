@@ -17,9 +17,10 @@ export const mapUserReviews = (user: User, reviews: Review[], pages: number): Us
         reviews: reviews.length
             ? reviews.map((review) => ({
                   id: review.id,
+                  title: review.movie.title,
+                  overview: review.movie.overview,
                   comment: review.comment,
                   rating: review.rating,
-                  tmdbId: review.movieTmdbId,
                   createdAt: review.createdAt,
                   updatedAt: review.updatedAt,
               }))
