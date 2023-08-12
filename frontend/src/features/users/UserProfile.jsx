@@ -5,23 +5,19 @@ import { history } from 'helpers';
 
 const UserProfile = () => {
     const dispatch = useDispatch();
-
     const { user: authUser } = useSelector((store) => store.auth);
     const { userInfo } = useSelector((store) => store.users);
-    const [userState, setUser] = useState(userInfo);
 
     useEffect(() => {
         dispatch(userActions.getUserInfo(authUser.username));
-        setUser(userInfo);
-        history.navigate('/profile');
-    }, [userInfo]);
+    }, []);
 
     const user = {
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSy_JmafxKbli9Es5QUvL6d-qIdOd5RmExsvA&usqp=CAU',
-        username: userState.username,
-        email: userState.email,
-        memberSince: userState.createdAt,
-        reviews: userState.reviews
+        username: userInfo.username,
+        email: userInfo.email,
+        memberSince: userInfo.createdAt,
+        reviews: userInfo.reviews
     };
 
     return user.username ? (
@@ -50,7 +46,7 @@ const UserProfile = () => {
                     ))}
                 </ul>
             </div>
-        </div>): <div>{setUser(userInfo)}</div>;
+        </div>): <div></div>;
 };
 
 export { UserProfile };
