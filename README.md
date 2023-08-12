@@ -50,6 +50,20 @@ Tools used to implement the Frontend:
 - Yup: Helps to validate forms schemas.
 
 Instructions to run the frontend client
+- Enter into the backend directory: 
+
+        cd backend
+
+- Deploy on local machine.  
+
+    1.1 Connect your local machine to a postgres db-server.  
+    1.2 Create a new connection in localhost that follows the ```./ormconfig.ts``` configuration.  
+    1.3 Create a new database with name ```db``` and another with the name ```db_test``` for the integration test.   
+    1.4 Install the dependencies and devDependencies and to start the server wheter for production or development, run:    
+        
+        npm install 
+        
+        npm run start[:dev]
 
 - Enter into the frontend directory: 
 
