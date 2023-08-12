@@ -23,7 +23,7 @@ function createExtraActions() {
     function reviewMovie() {
         return createAsyncThunk(
             `${name}/reviewMovie`,
-            async ({ tmdbId, userName, rating }) => await fetchWrapper.post(`${baseUrl}/reviews`, { tmdbId, userName, rating })
+            async ({ tmdbId, userName, rating, comment }) => await fetchWrapper.post(`${baseUrl}/reviews`, { tmdbId, userName, rating, comment })
         );
     }
 
@@ -57,6 +57,8 @@ function createExtraReducers() {
             },
             [fulfilled]: (state, action) => {
                 state.movieReviews = action.payload;
+                const {tmdbId} = state.selectedMovie;
+                history.navigate(`/${tmdbId}/reviews`);
             },
             [rejected]: (state, action) => {
                 state.movieReviews = { error: action.error };

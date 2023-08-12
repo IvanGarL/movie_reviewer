@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { moviesActions } from "features";
 import { history } from 'helpers';
@@ -11,12 +11,14 @@ function MovieReview() {
     const { user: authUser } = useSelector((store) => store.auth);
     const { selectedMovie } = useSelector(store => store.movies);
 
+    const [comment, setComment] = useState('');
+
     useEffect(() => {
     }, []);
 
     // form validation rules 
     const validationSchema = Yup.object().shape({
-        rating: Yup.number().required('rating is required'), 
+        rating: Yup.number().required('rating is required'),
     });
     const formOptions = { resolver: yupResolver(validationSchema) };
 
@@ -24,11 +26,11 @@ function MovieReview() {
     const { register, handleSubmit, formState } = useForm(formOptions);
     const { errors, isSubmitting } = formState;
 
-    function onSubmit ({ rating }) {
+    function onSubmit({ rating }) {
         const { tmdbId } = selectedMovie;
         const userName = authUser.username;
         alert(`You rated ${selectedMovie.title} ${rating} stars!`)
-        return dispatch(moviesActions.reviewMovie({ tmdbId, userName, rating }));
+        return dispatch(moviesActions.reviewMovie({ tmdbId, userName, rating, comment }));
     };
 
     return selectedMovie ? (
@@ -51,6 +53,16 @@ function MovieReview() {
                             <input type="number" {...register('rating')} id="rating" name="rating" className="rating-input" min="1.0" max="10.0" required></input>
                             <div className="invalid-feedback">{errors.rating?.message}</div>
                             <br></br>
+                            <div>
+                            <label htmlFor="commentInput">Add Your Comment:</label>
+                            <textarea
+                                id="commentInput"
+                                rows="4"
+                                cols="50"
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)}
+                            />
+                        </div>
                             <button disabled={isSubmitting} className="submit-button" type="submit">
                                 {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                 Rate
