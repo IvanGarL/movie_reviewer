@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { fetchWrapper } from '_helpers';
+import { fetchWrapper } from 'helpers';
 
 // create slice
 

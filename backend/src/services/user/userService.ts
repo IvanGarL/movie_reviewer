@@ -23,8 +23,8 @@ export default class UsersService {
      * @apiParam  {String} [password] User password
      * @apiParam  {String} [passwordConfirmation] User password confirmation
      * @apiSuccess (201) {String} token JWT token
+     * @apiSuccess (201) {String} username User name
      * @apiSuccess (201) {String} email User email
-     * @apiSuccess (201) {String} role User role
      * @apiError (400) {String} message Error registering user
      * @apiError (400) {String} message Passwords dont match
      * @apiError (400) {String} message User already exists
@@ -32,8 +32,8 @@ export default class UsersService {
      * @apiSuccessExample {json} Success-Response:
      * {
      *      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9. ..."
+     *      "username": "ivangarl",
      *      "email": "ivangarl@yopmail.com",
-     *      "role": "USER"
      * }
      */
     public async register(req: AuthRequest, res: Response): Promise<void> {
@@ -79,8 +79,8 @@ export default class UsersService {
 
                 return res.status(201).send({
                     token,
+                    username: newUser.username,
                     email: newUser.email,
-                    role: newUser.role,
                 });
             },
         });
@@ -96,6 +96,7 @@ export default class UsersService {
      * @apiParam  {String} password User password
      * @apiSuccess (200) {String} token JWT token
      * @apiSuccess (200) {String} email User email
+     * @apiSuccess (200) {String} username User name
      * @apiError (400) {String} message Error logging in user
      * @apiError (404) {String} message User does not exist
      * @apiError (400) {String} message Passwords dont match
@@ -103,6 +104,7 @@ export default class UsersService {
      * @apiSuccessExample {json} Success-Response:
      * {
      *      "token": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9. ..."
+     *      "username": "ivangarl",
      *      "email": "ivangarl@yopmail.com",
      * }
      */
@@ -129,6 +131,7 @@ export default class UsersService {
 
                 res.send({
                     token: generateJWT(user),
+                    username: user.username,
                     email: user.email,
                 });
             },

@@ -1,9 +1,10 @@
-    import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
-
-import { history } from '_helpers';
-import { Nav, PrivateRoute } from '_components';
-import { Home } from 'home';
-import { Login } from 'login';
+import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { history } from 'helpers';
+import { Nav } from './components/Nav';
+import { PrivateRoute } from './components/PrivateRoute';
+import { Home } from './features/home/Home';
+import { Register } from './features/auth/Register';
+import { Login } from './features/auth/Login';
 
 export { App };
 
@@ -27,6 +28,7 @@ function App() {
                         }
                     />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </div>

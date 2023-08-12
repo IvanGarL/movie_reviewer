@@ -7,11 +7,13 @@ export { Home };
 
 function Home() {
     const dispatch = useDispatch();
+    // Gets current state for the 'user' object 
+    // from the store from the 'auth' reducer
     const { user: authUser } = useSelector(x => x.auth);
 
     useEffect(() => {
-        
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        dispatch(userActions.getAll());
+
     }, []);
 
     return (

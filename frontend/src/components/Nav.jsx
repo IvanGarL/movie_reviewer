@@ -17,6 +17,8 @@ function Nav() {
         <nav className="navbar navbar-expand navbar-dark bg-dark">
             <div className="navbar-nav">
                 <NavLink to="/" className="nav-item nav-link">Home</NavLink>
+                <NavLink to="/movies" className="nav-item nav-link">Movies</NavLink>
+                <NavLink to="/profile" className="nav-item nav-link">Profile</NavLink>
                 <button onClick={logout} className="btn btn-link nav-item nav-link">Logout</button>
             </div>
         </nav>
