@@ -54,8 +54,8 @@ function MovieReview() {
                             <input type="number" {...register('rating')} id="rating" name="rating" className="rating-input" min="1.0" max="10.0" required></input>
                             <div className="invalid-feedback">{errors.rating?.message}</div>
                             <br></br>
-                            <div>
-                                <label htmlFor="commentInput">Add Your Comment:</label>
+                            <div className="rating-form">
+                                <p>Add Your Comment:</p>
                                 <textarea
                                     id="commentInput"
                                     rows="4"
