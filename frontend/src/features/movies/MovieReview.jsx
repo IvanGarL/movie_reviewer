@@ -42,27 +42,28 @@ function MovieReview() {
                 </div>
                 <div className="movie-details">
                     <div className="movie-title">{selectedMovie.title}</div>
-                    <div className="movie-release-date">Release date: {new Date(selectedMovie.releaseDate).toLocaleDateString('en-US')}</div>
+                    <div className="movie-release-date">Release date: {selectedMovie.releaseDate ? new Date(selectedMovie.releaseDate).toLocaleDateString('en-US') : 'NA'}</div>
                     <div className="movie-overview">
                         {selectedMovie.overview}
                     </div>
                     <div className="rating-form">
-                        <h2>Rate the Movie</h2>
+                        <br></br>
+                        <h5>Rate the Movie</h5>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <label>Rating (1-10):</label>
                             <input type="number" {...register('rating')} id="rating" name="rating" className="rating-input" min="1.0" max="10.0" required></input>
                             <div className="invalid-feedback">{errors.rating?.message}</div>
                             <br></br>
                             <div>
-                            <label htmlFor="commentInput">Add Your Comment:</label>
-                            <textarea
-                                id="commentInput"
-                                rows="4"
-                                cols="50"
-                                value={comment}
-                                onChange={(e) => setComment(e.target.value)}
-                            />
-                        </div>
+                                <label htmlFor="commentInput">Add Your Comment:</label>
+                                <textarea
+                                    id="commentInput"
+                                    rows="4"
+                                    cols="50"
+                                    value={comment}
+                                    onChange={(e) => setComment(e.target.value)}
+                                />
+                            </div>
                             <button disabled={isSubmitting} className="submit-button" type="submit">
                                 {isSubmitting && <span className="spinner-border spinner-border-sm mr-1"></span>}
                                 Rate

@@ -43,3 +43,22 @@ Instructions to run the backend server
     Run the test suite running: ```npm run test```
 
 ## Frontend [WIP]
+
+Tools used to implement the Frontend:
+- React: Create multiple components, and reactive behaviour of them using hooks. 
+- Redux: Handles the global states in the navigation within the app.
+- Yup: Helps to validate forms schemas.
+
+Instructions to run the frontend client
+
+- Enter into the frontend directory: 
+
+        cd frontend
+
+- Deploy on local machine.  
+
+    1. Install the dependencies and devDependencies and to start the client in development environment, run:    
+        
+        npm install 
+        
+        npm run start
