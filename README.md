@@ -71,8 +71,8 @@ Instructions to run the frontend client
 
 - Deploy on local machine.  
 
-    1. Install the dependencies and devDependencies and to start the client in development environment, run:    
+  1. Install the dependencies and devDependencies and to start the client in development environment, run:    
         
-        npm install 
+         npm install 
         
-        npm run start
+         npm run start
