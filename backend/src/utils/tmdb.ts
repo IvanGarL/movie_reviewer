@@ -145,6 +145,7 @@ export class TheMovieDBAPIClient {
             const apiKey = process.env.TMDB_API_KEY;
             const guestSessionId = process.env.TMDB_API_GUEST_SESSION_ID;
             TheMovieDBAPIClient.instance = new TheMovieDBAPIClient(baseUrl, apiKey, guestSessionId);
+            TheMovieDBAPIClient.instance.getApiConfiguration();
         }
         return TheMovieDBAPIClient.instance;
     }

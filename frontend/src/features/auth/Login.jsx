@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { useSelector, useDispatch } from 'react-redux';
-
 import { history } from 'helpers';
 import { authActions } from 'features';
 import { Link } from 'react-router-dom';

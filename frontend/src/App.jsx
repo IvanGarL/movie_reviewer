@@ -2,11 +2,11 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import { history } from 'helpers';
 import { Nav } from './components/Nav';
 import { PrivateRoute } from './components/PrivateRoute';
-import { Home } from './features/home/Home';
 import { Register } from './features/auth/Register';
 import { Login } from './features/auth/Login';
-
-export { App };
+import React from 'react';
+import { MovieHome } from './features/movies/MovieHome';
+import { MovieReview } from './features/movies/MovieReview';
 
 function App() {
     // init custom history object to allow navigation from 
@@ -23,7 +23,15 @@ function App() {
                         path="/"
                         element={
                             <PrivateRoute>
-                                <Home />
+                                <MovieHome />
+                            </PrivateRoute>
+                        }
+                    />
+                    <Route
+                        path="/review"
+                        element={
+                            <PrivateRoute>
+                                <MovieReview />
                             </PrivateRoute>
                         }
                     />
@@ -35,3 +43,5 @@ function App() {
         </div>
     );
 }
+
+export { App };
