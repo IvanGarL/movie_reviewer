@@ -1,26 +1,35 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { fetchWrapper } from 'helpers';
+import { history, fetchWrapper } from 'helpers';
 
 function createInitialState() {
     return {
         movies: {},
-        selectedMovie: null
+        selectedMovie: null,
+        movieReviews: {},
     }
 }
 
 function createExtraActions() {
-    const baseUrl = `${process.env.REACT_APP_API_URL}/movies`;
+    const baseUrl = process.env.REACT_APP_API_URL;
 
     function getAll() {
         return createAsyncThunk(
             `${name}/getAll`,
-            async () => await fetchWrapper.get(baseUrl)
+            async () => await fetchWrapper.get(`${baseUrl}/movies`)
+        );
+    }
+
+    function reviewMovie() {
+        return createAsyncThunk(
+            `${name}/reviewMovie`,
+            async ({ tmdbId, userName, rating }) => await fetchWrapper.post(`${baseUrl}/reviews`, { tmdbId, userName, rating })
         );
     }
 
     return {
         getAll: getAll(),
+        reviewMovie: reviewMovie(),
     };    
 }
 
@@ -40,8 +49,24 @@ function createExtraReducers() {
         };
     }
 
+    function reviewMovie() {
+        var { pending, fulfilled, rejected } = extraActions.reviewMovie;
+        return {
+            [pending]: (state) => {
+                state.movieReviews = { loading: true };
+            },
+            [fulfilled]: (state, action) => {
+                state.movieReviews = action.payload;
+            },
+            [rejected]: (state, action) => {
+                state.movieReviews = { error: action.error };
+            }
+        };
+    }
+
     return {
         ...getAll(),
+        ...reviewMovie(),
     };
 }
 

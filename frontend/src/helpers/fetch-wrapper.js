@@ -17,7 +17,9 @@ function request(method) {
             requestOptions.headers['Content-Type'] = 'application/json';
             requestOptions.body = JSON.stringify(body);
         }
-        return fetch(url, requestOptions).then(handleResponse);
+        return fetch(url, requestOptions).then(handleResponse).catch(error => {
+            console.error('request error', error?.message || error);
+        });
     }
 }
 
@@ -50,7 +52,8 @@ function handleResponse(response) {
                 logout();
             }
 
-            const error = (data && data.message) || response.statusText;
+            const error = (data && data.message) || response;
+            console.log('handleResponse error', error);
             return Promise.reject(error);
         }
 
