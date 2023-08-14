@@ -35,7 +35,7 @@ export const passwordMatch = (inputPassword: string, hashedPassword: string) => 
 export const generateJWT = (user: User): string => {
     const superSecretKey = process.env.SECRET_KEY;
 
-    const options: jwt.SignOptions = { algorithm: 'RS256' };
+    const options: jwt.SignOptions = { algorithm: 'RS256', expiresIn: '1h' };
     const token = jwt.sign(
         {
             id: user.id,
