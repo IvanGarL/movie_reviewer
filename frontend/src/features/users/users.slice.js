@@ -15,7 +15,6 @@ function createExtraActions() {
         return createAsyncThunk(
             `${name}/getUserInfo`,
             async (username) => {
-                console.log("username: ", username);
                 return await fetchWrapper.get(`${baseUrl}/users/${username}/reviews`)
             }
         );
