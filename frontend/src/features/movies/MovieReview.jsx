@@ -13,9 +13,6 @@ function MovieReview() {
 
     const [comment, setComment] = useState('');
 
-    useEffect(() => {
-    }, []);
-
     // form validation rules 
     const validationSchema = Yup.object().shape({
         rating: Yup.number().required('rating is required'),
