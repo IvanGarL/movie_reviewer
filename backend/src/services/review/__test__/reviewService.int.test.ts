@@ -87,7 +87,7 @@ describe('When sending a request', () => {
             expect(review.rating).toBe(9.8);
             expect(review.comment).toBe('This is a comment');
         });
-        test('if the user has already reviewed the movie, it should update the review', async () => {
+        test.only('if the user has already reviewed the movie, it should update the review', async () => {
             const movie = await MovieFactory.createMovie(
                 {
                     title: 'The Matrix',

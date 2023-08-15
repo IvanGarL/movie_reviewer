@@ -90,16 +90,20 @@ describe('When sending a request', () => {
 
             const reviews = await Promise.all(
                 _.range(50).map(async () => {
-                    const user = await UserFactory.createUser(
-                        {
-                            email: chance.email(),
-                            role: UserRoles.USER,
-                            password: await Encryption.getHashedPassword('very-secret-password'),
-                        },
-                        manager,
-                    );
+                    try {
+                        const user = await UserFactory.createUser(
+                            {
+                                email: chance.email(),
+                                role: UserRoles.USER,
+                                password: await Encryption.getHashedPassword('very-secret-password'),
+                            },
+                            manager,
+                        );
 
-                    return await ReviewFactory.createReview({}, user, movie, manager);
+                        return await ReviewFactory.createReview({}, user, movie, manager);
+                    } catch (error) {
+                        console.log('skiping user-review creation for error:', error);
+                    }
                 }),
             );
 

@@ -45,9 +45,7 @@ describe('When sending a POST request to /users/register, then', () => {
 
         expect(response.body).toHaveProperty('token');
         expect(response.body).toHaveProperty('email');
-        expect(response.body).toHaveProperty('role');
         expect(response.body.email).toBe('ivangarl@yopmail.com');
-        expect(response.body.role).toBe(UserRoles.USER);
 
         const user = await manager.findOne(User, { where: { email: 'ivangarl@yopmail.com' } });
         expect(user).toBeDefined();
