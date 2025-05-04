@@ -6,8 +6,6 @@ import { randomString, replaceStringParameters } from './strings';
 
 dotenv.config();
 
-console.log('TMDB API key:', process.env.TMDB_API_KEY);
-
 /**
  * Enum with the available poster sizes
  */
