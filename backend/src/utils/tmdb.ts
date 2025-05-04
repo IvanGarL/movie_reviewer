@@ -1,8 +1,12 @@
 import axios, { AxiosRequestConfig, Method } from 'axios';
-import 'dotenv/config';
+import * as dotenv from 'dotenv';
 import { PromiseTimeout } from './async';
 import { isTestEnv } from './environment';
 import { randomString, replaceStringParameters } from './strings';
+
+dotenv.config();
+
+console.log('TMDB API key:', process.env.TMDB_API_KEY);
 
 /**
  * Enum with the available poster sizes

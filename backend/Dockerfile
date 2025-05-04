@@ -1,5 +1,5 @@
 # STAGE 1.
-FROM node:14.17.0 as builder
+FROM node:20 as builder
 WORKDIR /usr/app
 # Copy package json for use cache efficiently
 COPY package*.json ./
@@ -8,9 +8,10 @@ COPY . .
 RUN npm run build
 
 # STAGE 2.
-FROM node:14.17.0
+FROM node:20
 WORKDIR /usr/app
 COPY package*.json ./
+COPY .env .env
 RUN npm install
 
 COPY --from=builder /usr/app/dist ./dist

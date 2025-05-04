@@ -12,7 +12,7 @@ export const dbConfig: PostgresConnectionOptions = {
     migrationsRun: !isTestEnv(),
     namingStrategy: new SnakeNamingStrategy(),
     logging: false,
-    host: '0.0.0.0',
+    host: 'db',
     username: 'postgres',
     password: 'postgres',
     extra: { max: 3 }, // Limit the postgres connection pool size (1 master and 2 slaves per pool)
